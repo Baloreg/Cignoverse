@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Documentazione — Cignoverse">
+  <div class="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <div class="mb-12 border-b border-slate-200 dark:border-slate-800 pb-8">
+      <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">Documentazione Ufficiale</h1>
+      <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">
+        Guide, linee guida di design, standard di accessibilità e specifiche per i contributori del Club del Cigno.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Sidebar Nav -->
+      <aside class="space-y-2">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Indice</h3>
+        <ul class="space-y-1 text-sm font-medium">
+          <li><a href="#introduzione" class="block px-3 py-2 rounded-lg bg-cigno-blue/10 text-cigno-blue font-semibold">1. Introduzione</a></li>
+          <li><a href="#accessibilita" class="block px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">2. Standard A11y</a></li>
+          <li><a href="#contribuire" class="block px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">3. Come Contribuire</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="md:col-span-3 space-y-12">
+        <section id="introduzione" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">1. Introduzione al Cignoverse</h2>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+            Il Cignoverse è l'ecosistema digitale del Club del Cigno. Progettato con un'architettura modulare, unisce sviluppatori, designer e appassionati nella creazione di software open source di alta qualità.
+          </p>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+            Tutti i progetti seguono rigorosi standard di pulizia del codice, manutenibilità e rispetto della privacy degli utenti.
+          </p>
+        </section>
+
+        <section id="accessibilita" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">2. Standard di Accessibilità (A11y)</h2>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+            Ogni interfaccia prodotta all'interno della community deve rispettare i requisiti WCAG 2.1 Livello AA:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-slate-600 dark:text-slate-300">
+            <li>Contrasto minimo di 4.5:1 per il testo normale.</li>
+            <li>Navigazione completa da tastiera con indicatori di focus visibili ed evidenti.</li>
+            <li>Utilizzo corretto di landmark HTML semantici e attributi ARIA.</li>
+          </ul>
+        </section>
+
+        <section id="contribuire" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">3. Come Contribuire</h2>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+            Puoi partecipare aprendo una issue, inviando una pull request o testando i prototipi in corso d'opera.
+          </p>
+          <a href="/community" class="inline-block bg-cigno-blue text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:opacity-95 transition-opacity">
+            Unisciti ai canali di sviluppo
+          </a>
+        </section>
+      </div>
+    </div>
+  </div>
+</Layout>

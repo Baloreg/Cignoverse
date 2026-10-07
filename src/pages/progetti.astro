@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Progetti — Cignoverse">
+  <div class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">I Progetti del Cignoverse</h1>
+      <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">
+        Una panoramica completa delle applicazioni e delle iniziative sviluppate dalla community del Club del Cigno.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Progetto 1: EcoCigno -->
+      <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-cigno-blue/10 text-cigno-blue rounded-xl flex items-center justify-center font-bold text-lg">01</div>
+          <span class="bg-amber-500/10 text-amber-500 text-xs font-semibold px-2.5 py-1 rounded-md">In sviluppo</span>
+        </div>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">EcoCigno</h2>
+        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+          Applicazione rivolta alla sensibilizzazione sulla raccolta differenziata con un calendario delle raccolte totalmente personalizzabile e notifiche intelligenti.
+        </p>
+        <div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500">
+          <span>Stato: Coding</span>
+          <span>•</span>
+          <span>Target: Mobile</span>
+        </div>
+      </article>
+
+      <!-- Progetto 2: CignoLauncher -->
+      <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-cigno-blue/10 text-cigno-blue rounded-xl flex items-center justify-center font-bold text-lg">02</div>
+          <span class="bg-blue-500/10 text-blue-400 text-xs font-semibold px-2.5 py-1 rounded-md">Alpha Test</span>
+        </div>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">CignoLauncher</h2>
+        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+          Launcher di Minecraft moderno e multi-instanza, progettato per gestire modpack, account multipli e ottimizzazioni di performance in modo semplice.
+        </p>
+        <div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500">
+          <span>Stato: Testing</span>
+          <span>•</span>
+          <span>Target: Desktop</span>
+        </div>
+      </article>
+
+      <!-- Progetto 3: Cignuroid -->
+      <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-cigno-blue/10 text-cigno-blue rounded-xl flex items-center justify-center font-bold text-lg">03</div>
+          <span class="bg-amber-500/10 text-amber-500 text-xs font-semibold px-2.5 py-1 rounded-md">Prototipo</span>
+        </div>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Cignuroid</h2>
+        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+          Applicazione di emulazione di retro console per dispositivi mobili, pensata per offrire un'interfaccia pulita, alte prestazioni e supporto completo ai controller.
+        </p>
+        <div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500">
+          <span>Stato: R&D</span>
+          <span>•</span>
+          <span>Target: Android</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</Layout>

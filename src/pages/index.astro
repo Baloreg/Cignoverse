@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Cignoverse — Hub del Club del Cigno">
+  <!-- Hero Section con animazioni CSS -->
+  <section class="py-24 lg:py-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center relative overflow-hidden">
+    <div class="absolute inset-0 -z-10 flex items-center justify-center opacity-10 blur-3xl pointer-events-none">
+      <div class="w-[500px] h-[500px] bg-cigno-blue rounded-full"></div>
+    </div>
+    
+    <div class="inline-flex items-center gap-2 bg-cigno-blue/10 text-cigno-blue dark:bg-cigno-blue/20 dark:text-blue-400 px-3 py-1 rounded-full text-xs font-semibold mb-6 animate-fade-in">
+      <span>Hub Ufficiale Club del Cigno</span>
+    </div>
+    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-4xl mx-auto leading-tight animate-slide-up">
+      Esplora l'universo delle app e dei progetti della community
+    </h1>
+    <p class="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed animate-slide-up" style="animation-delay: 100ms;">
+      Un hub pulito, accessibile e moderno dove la creatività del Club del Cigno prende vita attraverso EcoCigno, CignoLauncher, Cignuroid e le sfide tra clan.
+    </p>
+    <div class="mt-10 flex flex-wrap justify-center gap-4 animate-slide-up" style="animation-delay: 200ms;">
+      <a href="/casate" class="bg-cigno-blue text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-all shadow-lg shadow-cigno-blue/20 hover:scale-105 transform duration-200">
+        Fai il Test di Smistamento
+      </a>
+      <a href="/progetti" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all hover:scale-105 transform duration-200">
+        Scopri i Progetti
+      </a>
+    </div>
+  </section>
+
+  <!-- Banner Smistamento -->
+  <section class="py-12 bg-gradient-to-r from-cigno-blue/10 via-purple-500/10 to-amber-500/10 border-y border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">A quale Casata appartieni?</h2>
+      <p class="text-slate-600 dark:text-slate-300 text-sm max-w-xl mx-auto mb-6">
+        Entra a far parte delle gilde del Cignoverse, guadagna punti per il tuo clan e scala la classifica delle guerre tra clan.
+      </p>
+      <a href="/casate" class="inline-block bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold px-6 py-2.5 rounded-xl text-sm hover:opacity-90 transition-opacity">
+        Entra nella Sala Grande →
+      </a>
+    </div>
+  </section>
+
+  <!-- Preview Sezione Progetti -->
+  <section class="py-20 bg-slate-50 dark:bg-slate-950 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row justify-between items-center mb-12 gap-4">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">I Progetti in Evidenza</h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-1">EcoCigno, CignoLauncher e Cignuroid.</p>
+        </div>
+        <a href="/progetti" class="text-cigno-blue font-semibold hover:underline flex items-center gap-1">
+          Visualizza tutti →
+        </a>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 duration-300">
+          <div class="w-12 h-12 bg-cigno-blue/10 text-cigno-blue rounded-xl flex items-center justify-center font-bold text-lg mb-4">01</div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">EcoCigno</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">Raccolta differenziata e calendario totalmente personalizzabile.</p>
+          <span class="inline-block bg-amber-500/10 text-amber-500 text-xs font-semibold px-2.5 py-1 rounded-md">In sviluppo</span>
+        </div>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 duration-300">
+          <div class="w-12 h-12 bg-cigno-blue/10 text-cigno-blue rounded-xl flex items-center justify-center font-bold text-lg mb-4">02</div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">CignoLauncher</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">Launcher di Minecraft moderno e multi-instanza.</p>
+          <span class="inline-block bg-blue-500/10 text-blue-400 text-xs font-semibold px-2.5 py-1 rounded-md">Alpha Test</span>
+        </div>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 duration-300">
+          <div class="w-12 h-12 bg-cigno-blue/10 text-cigno-blue rounded-xl flex items-center justify-center font-bold text-lg mb-4">03</div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Cignuroid</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">Applicazione di emulazione di retro console.</p>
+          <span class="inline-block bg-amber-500/10 text-amber-500 text-xs font-semibold px-2.5 py-1 rounded-md">Prototipo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+}
+</style>
