@@ -9,3 +9,4 @@ L'hub ufficiale della community del Club del Cigno.
 
 ## Dominio Custom
 Configurato per `cignoverse.it`.
+test update for auth check
