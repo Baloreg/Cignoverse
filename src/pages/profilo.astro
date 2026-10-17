@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Profilo Utente — Cignoverse">
+  <div class="py-16 px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
+      <div class="flex flex-col sm:flex-row items-center gap-6 mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
+        <div class="relative group">
+          <div id="avatar-container" class="w-24 h-24 rounded-full bg-cigno-blue/20 text-cigno-blue flex items-center justify-center font-bold text-3xl overflow-hidden border-2 border-cigno-blue">
+            <span id="avatar-initial">?</span>
+            <img id="avatar-img" src="" alt="Avatar" class="w-full h-full object-cover hidden" />
+          </div>
+        </div>
+        <div class="text-center sm:text-left">
+          <h1 id="user-display-name" class="text-2xl font-extrabold text-slate-900 dark:text-white">Caricamento...</h1>
+          <p id="user-email" class="text-slate-500 text-sm mt-1">...</p>
+          <div class="flex flex-wrap gap-2 mt-3 justify-center sm:justify-start">
+            <span id="badge-house" class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-500">Nessuna Casata</span>
+            <span id="badge-clan" class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-500">Nessun Clan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Modifica Profilo -->
+      <div class="space-y-6">
+        <div>
+          <label for="nickname-input" class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Il tuo Nickname:</label>
+          <input type="text" id="nickname-input" placeholder="Es. CignuxCoder" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-cigno-blue" />
+        </div>
+
+        <div>
+          <label for="avatar-url-input" class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">URL Immagine Profilo:</label>
+          <input type="url" id="avatar-url-input" placeholder="https://esempio.com/avatar.jpg" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-cigno-blue" />
+        </div>
+
+        <div class="flex gap-4 pt-4">
+          <button id="save-profile-btn" class="flex-1 bg-cigno-blue text-white py-3 rounded-xl font-semibold text-sm hover:opacity-90 transition-all shadow-lg shadow-cigno-blue/20">
+            Salva Modifiche
+          </button>
+          <button id="logout-btn" class="px-6 bg-red-500/10 text-red-500 py-3 rounded-xl font-semibold text-sm hover:bg-red-500/20 transition-all">
+            Esci (Logout)
+          </button>
+        </div>
+      </div>
+
+      <div id="profile-message" class="mt-6 text-center text-xs font-medium"></div>
+    </div>
+  </div>
+
+  <script>
+    import { supabase } from '../lib/supabase';
+
+    const displayName = document.getElementById('user-display-name');
+    const displayEmail = document.getElementById('user-email');
+    const nicknameInput = document.getElementById('nickname-input') as HTMLInputElement;
+    const avatarUrlInput = document.getElementById('avatar-url-input') as HTMLInputElement;
+    const avatarInitial = document.getElementById('avatar-initial');
+    const avatarImg = document.getElementById('avatar-img') as HTMLImageElement;
+    const saveBtn = document.getElementById('save-profile-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const msg = document.getElementById('profile-message');
+    const badgeHouse = document.getElementById('badge-house');
+    const badgeClan = document.getElementById('badge-clan');
+
+    let currentUser: any = null;
+
+    async function loadUser() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        window.location.href = '/accedi';
+        return;
+      }
+      currentUser = session.user;
+      const email = currentUser.email;
+      displayEmail.textContent = email;
+
+      const savedNick = localStorage.getItem('cigno_username') || email.split('@')[0];
+      const savedAvatar = localStorage.getItem('cigno_avatar') || currentUser.user_metadata?.avatar_url || '';
+      const savedHouse = localStorage.getItem('cigno_house');
+      const savedClan = localStorage.getItem('cigno_clan');
+
+      nicknameInput.value = savedNick;
+      avatarUrlInput.value = savedAvatar;
+      displayName.textContent = savedNick;
+
+      if (savedAvatar) {
+        avatarImg.src = savedAvatar;
+        avatarImg.classList.remove('hidden');
+        avatarInitial.classList.add('hidden');
+      } else {
+        avatarInitial.textContent = savedNick.charAt(0).toUpperCase();
+      }
+
+      if (savedHouse) badgeHouse.textContent = `Casata: ${savedHouse}`;
+      if (savedClan) badgeClan.textContent = `Clan: ${savedClan}`;
+    }
+
+    saveBtn?.addEventListener('click', () => {
+      const nick = nicknameInput.value.trim();
+      const avatarUrl = avatarUrlInput.value.trim();
+
+      if (nick) {
+        localStorage.setItem('cigno_username', nick);
+        displayName.textContent = nick;
+        avatarInitial.textContent = nick.charAt(0).toUpperCase();
+      }
+
+      if (avatarUrl) {
+        localStorage.setItem('cigno_avatar', avatarUrl);
+        avatarImg.src = avatarUrl;
+        avatarImg.classList.remove('hidden');
+        avatarInitial.classList.add('hidden');
+      }
+
+      if (msg) {
+        msg.textContent = 'Profilo aggiornato con successo!';
+        msg.className = 'mt-6 text-center text-xs font-medium text-emerald-500';
+      }
+    });
+
+    logoutBtn?.addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = '/';
+    });
+
+    loadUser();
+  </script>
+</Layout>
