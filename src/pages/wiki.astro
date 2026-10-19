@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Wiki Galattica — Cignoverse">
+  <div class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-12 border-b border-slate-200 dark:border-slate-800 pb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-cigno-blue/10 text-cigno-blue dark:bg-cigno-blue/20 dark:text-blue-400 px-3 py-1 rounded-full text-xs font-semibold mb-3">
+          <span>Archivio Conoscenza Ufficiale • Le Cinque Corone</span>
+        </div>
+        <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">Wiki Galattica del Cignoverse</h1>
+        <p class="mt-2 text-lg text-slate-600 dark:text-slate-300 max-w-2xl">
+          L'enciclopedia completa del lore, delle tecnologie, delle casate nobiliari e dei manuali tecnici del Club del Cigno.
+        </p>
+      </div>
+      <div class="w-full md:w-80">
+        <div class="relative">
+          <input type="text" id="wiki-search" placeholder="Cerca nella Wiki..." class="w-full px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-cigno-blue" />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <!-- Sidebar Nav Wiki -->
+      <aside class="space-y-6">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Indice Wiki</h3>
+          <nav class="space-y-1 text-sm font-medium">
+            <button data-target="section-lore" class="wiki-nav-btn w-full text-left px-3 py-2 rounded-lg bg-cigno-blue/10 text-cigno-blue font-semibold transition-colors flex items-center gap-2">
+              <span>🌌</span> Lore: Le Cinque Corone
+            </button>
+            <button data-target="section-veyr" class="wiki-nav-btn w-full text-left px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
+              <span>⚡</span> Tecnologia Veyr & Veth
+            </button>
+            <button data-target="section-casate" class="wiki-nav-btn w-full text-left px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
+              <span>👑</span> Le Grandi Casate
+            </button>
+            <button data-target="section-progetti" class="wiki-nav-btn w-full text-left px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
+              <span>🚀</span> Progetti Community
+            </button>
+            <button data-target="section-a11y" class="wiki-nav-btn w-full text-left px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
+              <span>♿</span> Standard & Accessibilità
+            </button>
+          </nav>
+        </div>
+
+        <div class="bg-gradient-to-br from-cigno-blue/10 to-purple-500/10 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 text-sm">
+          <h4 class="font-bold text-slate-900 dark:text-white mb-1">Contribuisci alla Wiki</h4>
+          <p class="text-slate-600 dark:text-slate-300 text-xs mb-3">Ogni membro del Club del Cigno può aggiornare i registri galattici.</p>
+          <a href="/community" class="block text-center bg-cigno-blue text-white py-2 rounded-xl text-xs font-semibold hover:opacity-90">
+            Proponi una modifica
+          </a>
+        </div>
+      </aside>
+
+      <!-- Wiki Content Sections -->
+      <main class="lg:col-span-3 space-y-8">
+        <!-- 1. Lore -->
+        <section id="section-lore" class="wiki-section bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm space-y-4">
+          <div class="flex items-center gap-3 text-cigno-blue mb-2">
+            <span class="text-2xl">🌌</span>
+            <span class="text-xs font-bold uppercase tracking-wider">Capitolo 01</span>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Le Cinque Corone del Cigno & La Frattura</h2>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+            Il setting è collocato nella Costellazione del Cigno (Cygnus), con la stella dominante <strong>Deneb ($\alpha$ Cygni)</strong>. Settecento anni fa, l'antico <strong>Impero Cygnico</strong> subì <em>La Frattura</em>: il crollo catastrofico della Rete Veth di portali interstellari.
+          </p>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+            Il feudalesimo spaziale non è un vezzo estetico, ma l'unica soluzione logistica possibile in un cosmo dove la comunicazione e i trasporti sono frammentati e imprevedibili. Il potere centrale è svanito, lasciando spazio a entità economiche e militari che lottano per il controllo dei nodi strategici.
+          </p>
+        </section>
+
+        <!-- 2. Veyr & Veth -->
+        <section id="section-veyr" class="wiki-section hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm space-y-4">
+          <div class="flex items-center gap-3 text-amber-500 mb-2">
+            <span class="text-2xl">⚡</span>
+            <span class="text-xs font-bold uppercase tracking-wider">Capitolo 02</span>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Infrastruttura Veyr e Reti Veth</h2>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+            Il <strong>Veyr</strong> non è magia arcana, bensì una forza fisica pura incanalata tramite reattori avanzati, condotti energetici e nodi orbitali. Chi controlla i nodi Veyr detiene il monopolio economico e militare della galassia.
+          </p>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+            La <strong>Rete Veth</strong> è il sistema di passaggi e portali che collega i sistemi stellari. Poiché i portali fluttuano e richiedono calcoli quantistici complessi, i navigatori e gli ingegneri della community lavorano costantemente per stabilizzare le rotte.
+          </p>
+        </section>
+
+        <!-- 3. Casate -->
+        <section id="section-casate" class="wiki-section hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm space-y-4">
+          <div class="flex items-center gap-3 text-purple-500 mb-2">
+            <span class="text-2xl">👑</span>
+            <span class="text-xs font-bold uppercase tracking-wider">Capitolo 03</span>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Le Grandi Casate Nobiliari</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1 text-amber-500">Casata Veyr</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300">Custodi dell'energia e dell'efficienza infrastrutturale.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1 text-blue-500">Casata Veth</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300">Navigatori dei portali e maestri delle comunicazioni.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1 text-purple-500">Casata Deneb</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300">Eredi legittimi dell'Impero e aspiranti al Trono della Croce del Nord.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1 text-emerald-500">I Liberi della Frattura</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300">Ribelli e sviluppatori open source che lottano per la libertà digitale.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Progetti -->
+        <section id="section-progetti" class="wiki-section hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm space-y-4">
+          <div class="flex items-center gap-3 text-blue-500 mb-2">
+            <span class="text-2xl">🚀</span>
+            <span class="text-xs font-bold uppercase tracking-wider">Capitolo 04</span>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Progetti della Community</h2>
+          <ul class="space-y-3 text-slate-600 dark:text-slate-300 text-sm">
+            <li><strong>EcoCigno:</strong> Gestione intelligente della raccolta differenziata e calendari personalizzati.</li>
+            <li><strong>CignoLauncher:</strong> Launcher Minecraft moderno, multi-istanza e performante.</li>
+            <li><strong>Cignuroid:</strong> Emulatore di retro console open source ottimizzato per la community.</li>
+          </ul>
+        </section>
+
+        <!-- 5. Accessibilità -->
+        <section id="section-a11y" class="wiki-section hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm space-y-4">
+          <div class="flex items-center gap-3 text-emerald-500 mb-2">
+            <span class="text-2xl">♿</span>
+            <span class="text-xs font-bold uppercase tracking-wider">Capitolo 05</span>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Standard di Accessibilità e Codice</h2>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+            Ogni componente del Cignoverse rispetta i criteri WCAG 2.1 AA. L'interfaccia garantisce contrasti elevati, supporto screen reader e navigazione completa tramite tastiera.
+          </p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const navBtns = document.querySelectorAll('.wiki-nav-btn');
+    const sections = document.querySelectorAll('.wiki-section');
+    const wikiSearch = document.getElementById('wiki-search') as HTMLInputElement;
+
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+
+        navBtns.forEach(b => {
+          b.classList.remove('bg-cigno-blue/10', 'text-cigno-blue', 'font-semibold');
+          b.classList.add('text-slate-600', 'dark:text-slate-400');
+        });
+        btn.classList.add('bg-cigno-blue/10', 'text-cigno-blue', 'font-semibold');
+        btn.classList.remove('text-slate-600', 'dark:text-slate-400');
+
+        sections.forEach(s => {
+          if (s.id === targetId) {
+            s.classList.remove('hidden');
+          } else {
+            s.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    wikiSearch?.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value.toLowerCase();
+      sections.forEach(s => {
+        const text = s.textContent?.toLowerCase() || '';
+        if (text.includes(query)) {
+          s.classList.remove('hidden');
+        } else {
+          s.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</Layout>
