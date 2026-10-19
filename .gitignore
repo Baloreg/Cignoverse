@@ -1,0 +1,14 @@
+# Dipendenze
+node_modules/
+
+# Cache di build Astro
+.astro/
+.wrangler/
+
+# Segreti
+.env
+.env.*
+!.env.example
+
+# Sistema operativo
+.DS_Store
