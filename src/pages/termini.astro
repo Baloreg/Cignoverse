@@ -4,104 +4,68 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Termini di Servizio — Cignoverse">
   <div class="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
-      <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Termini di Servizio</h1>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mb-8">Ultimo aggiornamento: 19 ottobre 2026 · Versione 2.0</p>
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 sm:p-12 shadow-sm">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3 tracking-tight">Termini di Servizio</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-10 pb-6 border-b border-slate-200 dark:border-slate-800">Ultimo aggiornamento: 19 ottobre 2026 &middot; Versione 2.0</p>
 
-      <div class="space-y-6 text-slate-700 dark:text-slate-300">
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">1. Accettazione dei termini</h2>
-          <p class="mt-2">Il <strong>Club del Cigno</strong> (di seguito "Cignoverse") gestisce il servizio web disponibile all'indirizzo <a href="https://cignoverse.it" class="text-cigno-blue hover:underline">cignoverse.it</a> (di seguito il "Servizio").</p>
-          <p class="mt-2">I presenti Termini di Servizio ("Termini") regolano l'accesso e l'uso del Servizio da parte degli utenti. Accedendo al Servizio, creando un account o utilizzando le funzionalità disponibili, dichiari di aver letto, compreso e accettato i presenti Termini e l'Informativa sulla Privacy, consultabile all'indirizzo <a href="/privacy" class="text-cigno-blue hover:underline">cignoverse.it/privacy</a>.</p>
-          <p class="mt-2">Se non accetti i presenti Termini, ti chiediamo di non utilizzare il Servizio. Se non concordi con le modifiche, puoi chiudere il tuo account in qualsiasi momento.</p>
+      <div class="space-y-10 text-slate-700 dark:text-slate-300 text-base leading-relaxed">
+        <section class="space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">1. Accettazione dei termini</h2>
+          <p>Il <strong>Club del Cigno</strong> gestisce il servizio web disponibile all'indirizzo <a href="https://cignoverse.it" class="text-cigno-blue hover:underline font-medium">cignoverse.it</a> (di seguito il "Servizio").</p>
+          <p>Accedendo al Servizio, creando un account o utilizzando le funzionalità disponibili, dichiari di aver letto, compreso e accettato i presenti Termini di Servizio e l'Informativa sulla Privacy (<a href="/privacy" class="text-cigno-blue hover:underline font-medium">cignoverse.it/privacy</a>).</p>
+          <p>Se non accetti i presenti Termini, ti invitiamo a non utilizzare il Servizio.</p>
         </section>
 
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">2. Descrizione del Servizio</h2>
-          <p class="mt-2">Il Cignoverse è l'ecosistema digitale del Club del Cigno. Il Servizio comprende:</p>
-          <ul class="list-disc pl-5 space-y-2 mt-2">
-            <li>la consultazione dei progetti e delle risorse della community;</li>
+        <section class="space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">2. Descrizione del Servizio</h2>
+          <p>Il Cignoverse è l'ecosistema digitale del Club del Cigno e comprende:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>la consultazione dei progetti e delle risorse open source della community;</li>
             <li>la creazione e la gestione di un profilo utente autenticato;</li>
-            <li>la pubblicazione di contenuti, issue e proposte di collaborazione;</li>
             <li>la documentazione tecnica, le linee guida di design e gli standard di accessibilità;</li>
             <li>le comunicazioni e gli aggiornamenti relativi alle attività della community.</li>
           </ul>
-          <p class="mt-2">Il Servizio è fornito gratuitamente. Possiamo aggiungere, modificare o disattivare funzionalità in qualsiasi momento.</p>
         </section>
 
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">3. Requisiti per l'account e registrazione</h2>
-          <ul class="list-disc pl-5 space-y-2 mt-2">
-            <li>devi avere almeno 16 anni per creare un account; se hai meno di 18 anni devi avere il consenso di un genitore o tutore;</li>
-            <li>l'account viene creato tramite autenticazione OAuth con Google, che ci fornisce la tua identità digitale verificata;</li>
-            <li>devi fornire informazioni accurate e mantenerle aggiornate;</li>
-            <li>sei l'unico responsabile delle attività svolte tramite il tuo account e dei relativi accessi;</li>
-            <li>puoi creare un solo account per persona, salvo autorizzazione scritta del Cignoverse.</li>
+        <section class="space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">3. Requisiti per l'account e registrazione</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>devi avere almeno 16 anni per creare un account;</li>
+            <li>la registrazione avviene tramite autenticazione sicura con Google (OAuth);</li>
+            <li>sei responsabile della sicurezza del tuo account e delle attività svolte tramite esso;</li>
+            <li>puoi creare un solo account per persona.</li>
           </ul>
         </section>
 
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">4. Uso accettabile del Servizio</h2>
-          <p class="mt-2">Ti impegni a non utilizzare il Servizio per:</p>
-          <ul class="list-disc pl-5 space-y-2 mt-2">
-            <li>violare la legge applicabile o i diritti di terzi;</li>
-            <li>caricare malware, virus, codice dannoso o contenuti illeciti;</li>
-            <li>violare diritti d'autore, marchi registrati o brevetti;</li>
-            <li>effettuare spam, phishing o attività di impersonazione;</li>
-            <li>interferire con il funzionamento del Servizio o con l'accesso di altri utenti, anche tramite scraping automatizzato non autorizzato;</li>
-            <li>eludere i limiti tecnici o le restrizioni applicate dal Servizio;</li>
-            <li>condividere il tuo account o cedere le credenziali a terzi;</li>
-            <li>pubblicare contenuti offensivi, discriminatori, violenti o che promuovono autolesionismo.</li>
+        <section class="space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">4. Uso accettabile</h2>
+          <p>Ti impegni a non utilizzare il Servizio per:</p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>attività illegali, fraudolente o che violano i diritti di terzi;</li>
+            <li>caricare codice malevolo, virus o materiale lesivo;</li>
+            <li>interferire con il corretto funzionamento del Servizio o tentare accessi non autorizzati;</li>
+            <li>effettuare scraping automatizzato non autorizzato o spam.</li>
           </ul>
-          <p class="mt-2">Possiamo sospendere o chiudere un account che violi queste regole, previo eventuale avviso, salvo casi di violazione grave o reiterata.</p>
         </section>
 
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">5. Contenuti pubblicati e licenza</h2>
-          <p class="mt-2">I contenuti che pubblichi sul Servizio restano di tua proprietà. Ci concedi una licenza mondiale, gratuita, non esclusiva e limitata nel tempo per ospitare, riprodurre, mostrare e distribuire tali contenuti esclusivamente nella misura necessaria a far funzionare il Servizio.</p>
-          <p class="mt-2">I contenuti originali pubblicati dal Cignoverse (testi, documentazione, loghi, materiali grafici e codice di nostra creazione) sono rilasciati sotto licenza open source secondo le indicazioni indicate in ciascun progetto. I contenuti di terzi restano soggetti alle rispettive licenze.</p>
+        <section class="space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">5. Proprietà intellettuale</h2>
+          <p>I contenuti originali pubblicati dal Cignoverse (codice, loghi, documentazione) sono rilasciati sotto licenza open source salvo diversa indicazione. I contenuti personali degli utenti restano di proprietà dei rispettivi autori.</p>
         </section>
 
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">6. Disponibilità e modifiche del Servizio</h2>
-          <p class="mt-2">Il Servizio è fornito "così com'è" (as is). Facciamo il possibile per garantirne la continuità, ma non garantiamo un uptime specifico, salvo diversa indicazione. Possiamo modificare, sospendere o interrompere il Servizio (o parte di esso) per manutenzione, aggiornamenti, motivi di sicurezza o variazioni del prodotto.</p>
+        <section class="space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">6. Limitazione di responsabilità</h2>
+          <p>Il Servizio è fornito "così com'è" senza garanzie esplicite o implicite di alcun tipo. Nella misura massima consentita dalla legge, il Cignoverse non è responsabile per danni diretti o indiretti derivanti dall'uso o dall'impossibilità di utilizzo del Servizio.</p>
         </section>
 
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">7. Esclusione di garanzie</h2>
-          <p class="mt-2">Nella misura massima consentita dalla legge applicabile, il Cignoverse esclude ogni garanzia espressa o implicita, incluse le garanzie di commerciabilità, idoneità a uno scopo specifico, non violazione e accuratezza, relative al Servizio e ai suoi contenuti.</p>
-          <p class="mt-2">Nulla nei presenti Termini esclude o limita la responsabilità per morte o lesioni personali causate da negligenza, per frode o dolo, o per qualsiasi altra responsabilità che non possa essere esclusa o limitata dalla legge.</p>
+        <section class="space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">7. Modifiche ai Termini</h2>
+          <p>Ci riserviamo il diritto di aggiornare i presenti Termini in qualsiasi momento. Le modifiche saranno efficaci dal momento della pubblicazione sul sito.</p>
         </section>
 
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">8. Limitazione di responsabilità</h2>
-          <p class="mt-2">Nella misura massima consentita dalla legge, il Cignoverse non sarà responsabile di danni diretti, indiretti, incidentali, speciali, consequenziali o punitivi, né di perdita di profitti, ricavi, dati, affari o reputazione, derivanti dall'uso o dall'impossibilità di usare il Servizio.</p>
-          <p class="mt-2">La responsabilità complessiva del Cignoverse per qualsiasi reclamo è limitata all'importo effettivamente pagato dal Cignoverse per l'uso del Servizio nei 12 mesi precedenti l'evento che ha dato origine al reclamo, o a 100 euro se non hai effettuato alcun pagamento.</p>
-        </section>
-
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">9. Cessione</h2>
-          <p class="mt-2">Non puoi cedere i presenti Termini senza la nostra autorizzazione scritta preventiva. Noi possiamo cedere i presenti Termini a un'affiliata o in caso di fusione, acquisizione o ristrutturazione, senza ridurre i tuoi diritti. In caso di cessione a terzi non affiliati, ti avviseremo con almeno 30 giorni di anticipo.</p>
-        </section>
-
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">10. Cancellazione dell'account</h2>
-          <p class="mt-2">Puoi richiedere la cancellazione del tuo account in qualsiasi momento contattando <a href="mailto:privacy@cignoverse.it" class="text-cigno-blue hover:underline">privacy@cignoverse.it</a>. Possiamo anche chiudere il tuo account se rimane inattivo per un periodo prolungato, previo avviso via email. La cancellazione comporta l'eliminazione definitiva dei tuoi dati personali, secondo i tempi di conservazione descritti nell'Informativa sulla Privacy.</p>
-        </section>
-
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">11. Legge applicabile e foro competente</h2>
-          <p class="mt-2">I presenti Termini sono regolati dalla legge italiana. Per i consumatori resta ferma la competenza del foro del luogo di residenza o domicilio elettivo. Per le parti commerciali, la competenza è del tribunale di Roma, Italia. La presente clausola non pregiudica l'applicazione della normativa consumeristica vigente.</p>
-        </section>
-
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">12. Modifiche ai Termini</h2>
-          <p class="mt-2">Possiamo aggiornare i presenti Termini per riflettere modifiche del Servizio o del quadro normativo. La data di aggiornamento è indicata in testa al documento. In caso di modifiche sostanziali, ti informeremo con un avviso ben visibile sul Servizio o via email. Le modifiche si applicano dalla data di pubblicazione; continuando a utilizzare il Servizio dopo tale data, le accetti.</p>
-        </section>
-
-        <section>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">13. Contatti</h2>
-          <p class="mt-2">Per qualsiasi domanda relativa ai presenti Termini di Servizio puoi contattarci all'indirizzo <a href="mailto:legal@cignoverse.it" class="text-cigno-blue hover:underline">legal@cignoverse.it</a> o tramite la pagina <a href="/community" class="text-cigno-blue hover:underline">Community</a>.</p>
+        <section class="space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">8. Contatti</h2>
+          <p>Per qualsiasi domanda sui presenti Termini, puoi contattarci all'indirizzo email <a href="mailto:legal@cignoverse.it" class="text-cigno-blue hover:underline font-medium">legal@cignoverse.it</a>.</p>
         </section>
       </div>
     </div>
