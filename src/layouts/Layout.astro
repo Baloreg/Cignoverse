@@ -55,7 +55,19 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
               <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
               <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
             </button>
-            <a href="/accedi" id="auth-nav-btn" class="inline-block bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-4 py-2 rounded-lg font-medium text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+            <div id="user-menu-container" class="relative hidden">
+              <button id="user-menu-btn" class="flex items-center justify-center w-10 h-10 rounded-full overflow-hidden border-2 border-cigno-blue focus:outline-none focus:ring-2 focus:ring-cigno-blue/50 transition-transform hover:scale-105">
+                <span id="nav-avatar-initial" class="bg-gradient-to-br from-cigno-blue to-blue-600 text-white font-bold text-sm w-full h-full flex items-center justify-center">?</span>
+                <img id="nav-avatar-img" src="" alt="Avatar" class="w-full h-full object-cover hidden" />
+              </button>
+              <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 hidden z-50">
+                <a href="/profilo" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Il mio Profilo</a>
+                <a href="/impostazioni" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Impostazioni</a>
+                <div class="border-t border-slate-100 dark:border-slate-800 my-1"></div>
+                <button id="nav-logout-btn" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-500/10 transition-colors">Esci (Logout)</button>
+              </div>
+            </div>
+            <a href="/accedi" id="auth-login-btn" class="inline-block bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-4 py-2 rounded-lg font-medium text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
               Accedi
             </a>
             <a href="/casate" class="hidden sm:inline-block bg-cigno-blue text-white px-4 py-2 rounded-lg font-medium text-sm hover:opacity-90 transition-all shadow-lg shadow-cigno-blue/20">
@@ -113,20 +125,53 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
         }
       });
 
-      // Check auth status for navbar button
       async function checkAuth() {
-        const authBtn = document.getElementById('auth-nav-btn') as HTMLAnchorElement;
-        if (!authBtn) return;
+        const userMenuContainer = document.getElementById('user-menu-container');
+        const authLoginBtn = document.getElementById('auth-login-btn');
+        const navAvatarImg = document.getElementById('nav-avatar-img') as HTMLImageElement;
+        const navAvatarInitial = document.getElementById('nav-avatar-initial');
+
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
-          authBtn.textContent = 'Profilo';
-          authBtn.href = '/profilo';
+          authLoginBtn?.classList.add('hidden');
+          userMenuContainer?.classList.remove('hidden');
+
+          const currentUser = session.user;
+          const email = currentUser.email || '';
+          const googleAvatar = currentUser.user_metadata?.avatar_url || '';
+          const savedNick = localStorage.getItem('cigno_username') || email.split('@')[0];
+          const savedAvatar = localStorage.getItem('cigno_avatar') || googleAvatar;
+
+          if (savedAvatar) {
+            navAvatarImg.src = savedAvatar;
+            navAvatarImg.classList.remove('hidden');
+            navAvatarInitial?.classList.add('hidden');
+          } else {
+            navAvatarInitial.textContent = savedNick.charAt(0).toUpperCase();
+          }
         } else {
-          authBtn.textContent = 'Accedi';
-          authBtn.href = '/accedi';
+          authLoginBtn?.classList.remove('hidden');
+          userMenuContainer?.classList.add('hidden');
         }
       }
       checkAuth();
+
+      const userMenuBtn = document.getElementById('user-menu-btn');
+      const userDropdown = document.getElementById('user-dropdown');
+      userMenuBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userDropdown?.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', () => {
+        userDropdown?.classList.add('hidden');
+      });
+
+      const navLogoutBtn = document.getElementById('nav-logout-btn');
+      navLogoutBtn?.addEventListener('click', async () => {
+        await supabase.auth.signOut();
+        window.location.href = '/';
+      });
     </script>
   </body>
 </html>
