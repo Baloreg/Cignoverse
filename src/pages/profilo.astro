@@ -6,7 +6,7 @@ import Layout from '../layouts/Layout.astro';
   <div class="py-16 px-4 sm:px-6 lg:px-8 max-w-xl mx-auto">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 sm:p-10 shadow-sm">
       <!-- Header Profilo con Avatar Circolare e Overlay Matita -->
-      <div class="flex flex-col items-center text-center mb-8 pb-8 border-b border-slate-200 dark:border-slate-800">
+      <div class="flex flex-col items-center text-center mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div class="relative group cursor-pointer mb-4" id="avatar-wrapper" title="Clicca per cambiare immagine">
           <div id="avatar-container" class="w-28 h-28 rounded-full bg-gradient-to-br from-cigno-blue to-blue-600 text-white flex items-center justify-center font-extrabold text-4xl overflow-hidden shadow-xl shadow-cigno-blue/20 border-4 border-white dark:border-slate-800">
             <span id="avatar-initial">?</span>
@@ -20,18 +20,23 @@ import Layout from '../layouts/Layout.astro';
           <input type="file" id="avatar-file-input" accept="image/*" class="hidden" />
         </div>
 
-        <!-- Nickname con Modifica a Matita Inline -->
-        <div class="flex items-center justify-center gap-2 mb-1">
+        <!-- Nickname: Nome visualizzato con matita -->
+        <div id="nickname-display-container" class="flex items-center justify-center gap-2 mb-1">
           <h1 id="user-display-name" class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Caricamento...</h1>
           <button id="edit-nickname-btn" class="p-1.5 rounded-lg text-slate-400 hover:text-cigno-blue hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Modifica nickname">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
           </button>
         </div>
 
-        <!-- Input Nickname nascosto di default, appare in modifica -->
-        <div id="nickname-edit-container" class="hidden items-center gap-2 mt-2 w-full max-w-xs">
-          <input type="text" id="nickname-input" placeholder="Nuovo nickname..." class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-cigno-blue" />
-          <button id="save-nickname-btn" class="px-3 py-2 bg-cigno-blue text-white rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity">Salva</button>
+        <!-- Input che rimpiazza direttamente il nome durante la modifica -->
+        <div id="nickname-edit-container" class="hidden items-center justify-center gap-2 mb-1">
+          <input type="text" id="nickname-input" placeholder="Nickname..." class="text-xl font-bold text-center text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 border-2 border-cigno-blue rounded-xl px-3 py-1 focus:outline-none max-w-[220px]" />
+          <button id="save-nickname-btn" class="p-1.5 bg-cigno-blue text-white rounded-lg hover:opacity-90 transition-opacity" title="Salva">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+          </button>
+          <button id="cancel-nickname-btn" class="p-1.5 bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors" title="Annulla">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
         </div>
 
         <p id="user-email" class="text-slate-500 dark:text-slate-400 text-xs mt-1">...</p>
@@ -42,15 +47,15 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
 
-      <!-- Azioni Profilo -->
-      <div class="space-y-4">
-        <button id="logout-btn" class="w-full bg-red-500/10 text-red-500 py-3 rounded-2xl font-semibold text-sm hover:bg-red-500/20 transition-all flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+      <!-- Pulsante Logout Compatto -->
+      <div class="flex justify-center pt-2">
+        <button id="logout-btn" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-red-500 dark:text-red-400 bg-red-500/10 hover:bg-red-500/20 transition-all">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
           Esci (Logout)
         </button>
       </div>
 
-      <div id="profile-message" class="mt-6 text-center text-xs font-medium"></div>
+      <div id="profile-message" class="mt-4 text-center text-xs font-medium"></div>
     </div>
   </div>
 
@@ -59,10 +64,12 @@ import Layout from '../layouts/Layout.astro';
 
     const displayName = document.getElementById('user-display-name');
     const displayEmail = document.getElementById('user-email');
+    const nicknameDisplayContainer = document.getElementById('nickname-display-container');
     const editNicknameBtn = document.getElementById('edit-nickname-btn');
     const nicknameEditContainer = document.getElementById('nickname-edit-container');
     const nicknameInput = document.getElementById('nickname-input') as HTMLInputElement;
     const saveNicknameBtn = document.getElementById('save-nickname-btn');
+    const cancelNicknameBtn = document.getElementById('cancel-nickname-btn');
     const avatarWrapper = document.getElementById('avatar-wrapper');
     const avatarFileInput = document.getElementById('avatar-file-input') as HTMLInputElement;
     const avatarInitial = document.getElementById('avatar-initial');
@@ -137,29 +144,51 @@ import Layout from '../layouts/Layout.astro';
       }
     });
 
-    // Toggle nickname edit
-    editNicknameBtn?.addEventListener('click', () => {
-      nicknameEditContainer?.classList.toggle('hidden');
-      nicknameEditContainer?.classList.toggle('flex');
+    // Inizia la modifica del nickname direttamente sul nome
+    function startEditNickname() {
+      nicknameInput.value = displayName?.textContent || '';
+      nicknameDisplayContainer?.classList.add('hidden');
+      nicknameDisplayContainer?.classList.remove('flex');
+      nicknameEditContainer?.classList.remove('hidden');
+      nicknameEditContainer?.classList.add('flex');
       nicknameInput.focus();
-    });
+      nicknameInput.select();
+    }
 
-    saveNicknameBtn?.addEventListener('click', () => {
+    function stopEditNickname() {
+      nicknameEditContainer?.classList.add('hidden');
+      nicknameEditContainer?.classList.remove('flex');
+      nicknameDisplayContainer?.classList.remove('hidden');
+      nicknameDisplayContainer?.classList.add('flex');
+    }
+
+    function saveNickname() {
       const nick = nicknameInput.value.trim();
       if (nick) {
         localStorage.setItem('cigno_username', nick);
-        displayName.textContent = nick;
+        if (displayName) displayName.textContent = nick;
         setAvatar(localStorage.getItem('cigno_avatar') || '', nick);
-        nicknameEditContainer?.classList.add('hidden');
-        nicknameEditContainer?.classList.remove('flex');
+        stopEditNickname();
         showMsg('Nickname aggiornato con successo!');
+      }
+    }
+
+    editNicknameBtn?.addEventListener('click', startEditNickname);
+    saveNicknameBtn?.addEventListener('click', saveNickname);
+    cancelNicknameBtn?.addEventListener('click', stopEditNickname);
+
+    nicknameInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        saveNickname();
+      } else if (e.key === 'Escape') {
+        stopEditNickname();
       }
     });
 
     function showMsg(text: string) {
       if (msg) {
         msg.textContent = text;
-        msg.className = 'mt-6 text-center text-xs font-medium text-emerald-500';
+        msg.className = 'mt-4 text-center text-xs font-medium text-emerald-500';
         setTimeout(() => { msg.textContent = ''; }, 3000);
       }
     }
