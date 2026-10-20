@@ -30,8 +30,8 @@ import Layout from "../layouts/Layout.astro";
                     La Stella Dominante
                 </h2>
                 <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                    Nidificato attorno a <strong>Deneb ($\alpha$ Cygni)</strong>
-                    , l'antico Impero Cygnico ha lasciato in eredità reliquie
+                    Nidificato attorno a <strong>Deneb (alpha Cygni)</strong>,
+                    l'antico Impero Cygnico ha lasciato in eredità reliquie
                     galattiche e il controllo del Trono orbitale della Croce del
                     Nord.
                 </p>
@@ -126,7 +126,7 @@ import Layout from "../layouts/Layout.astro";
                                 id="save-house-btn"
                                 class="bg-cigno-blue text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-all shadow-lg shadow-cigno-blue/20"
                             >
-                                Registra la tua Casata
+                                Registra la tua Casata (Cloud)
                             </button>
                             <button
                                 id="retake-btn"
@@ -175,7 +175,7 @@ import Layout from "../layouts/Layout.astro";
                             id="user-clan-info"
                             class="text-xs text-slate-600 dark:text-slate-300"
                         >
-                            Clan / Fazione:{" "}
+                            Fazione / Clan:{" "}
                             <span class="font-semibold text-slate-900 dark:text-white">
                                 Nessuno
                             </span>
@@ -200,7 +200,7 @@ import Layout from "../layouts/Layout.astro";
                         id="update-profile-btn"
                         class="w-full bg-slate-800 dark:bg-slate-700 text-white py-2 rounded-lg font-medium text-sm hover:opacity-90 transition-opacity"
                     >
-                        Aggiorna Profilo
+                        Aggiorna Profilo Cloud
                     </button>
                 </div>
             </div>
@@ -319,6 +319,8 @@ import Layout from "../layouts/Layout.astro";
     </div>
 
     <script>
+        import { supabase } from "../lib/supabase";
+
         const houses = [
             {
                 id: "veyr",
@@ -419,9 +421,11 @@ import Layout from "../layouts/Layout.astro";
         let currentQuizIndex = 0;
         let scores = { veyr: 0, veth: 0, deneb: 0, frattura: 0 };
         let assignedHouse: any = null;
-        let username = localStorage.getItem("cigno_username") || "CygnusPilot";
-        let userHouse = localStorage.getItem("cigno_house") || null;
-        let userClan = localStorage.getItem("cigno_clan") || "Nessuno";
+        let currentUser: any = null;
+        let username = "CygnusPilot";
+        let userHouse: string | null = null;
+        let userClan = "Nessuno";
+        let userAvatarUrl = "";
 
         let clans = JSON.parse(
             localStorage.getItem("cigno_clans") ||
@@ -487,11 +491,88 @@ import Layout from "../layouts/Layout.astro";
         ) as HTMLInputElement;
         const userAvatar = document.getElementById("user-avatar");
 
+        async function initUser() {
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+            if (session && session.user) {
+                currentUser = session.user;
+                const email = currentUser.email || "";
+                const googleMeta = currentUser.user_metadata || {};
+                username = googleMeta.full_name || email.split("@")[0];
+                userAvatarUrl = googleMeta.avatar_url || "";
+
+                const { data: profile } = await supabase
+                    .from("profiles")
+                    .select("*")
+                    .eq("id", currentUser.id)
+                    .single();
+
+                if (profile) {
+                    if (profile.username) username = profile.username;
+                    if (profile.house) userHouse = profile.house;
+                    if (profile.clan) userClan = profile.clan;
+                    if (profile.avatar_url) userAvatarUrl = profile.avatar_url;
+                } else {
+                    userHouse = localStorage.getItem("cigno_house");
+                    userClan = localStorage.getItem("cigno_clan") || "Nessuno";
+                    await saveProfileToSupabase({
+                        username,
+                        house: userHouse,
+                        clan: userClan,
+                        avatar_url: userAvatarUrl,
+                    });
+                }
+            } else {
+                username =
+                    localStorage.getItem("cigno_username") || "CygnusPilot";
+                userHouse = localStorage.getItem("cigno_house") || null;
+                userClan = localStorage.getItem("cigno_clan") || "Nessuno";
+            }
+            updateUI();
+        }
+
+        async function saveProfileToSupabase(fields: {
+            username?: string;
+            house?: string | null;
+            clan?: string;
+            avatar_url?: string;
+        }) {
+            if (!currentUser) {
+                if (fields.username)
+                    localStorage.setItem("cigno_username", fields.username);
+                if (fields.house !== undefined)
+                    fields.house
+                        ? localStorage.setItem("cigno_house", fields.house)
+                        : localStorage.removeItem("cigno_house");
+                if (fields.clan)
+                    localStorage.setItem("cigno_clan", fields.clan);
+                return;
+            }
+
+            const updates = {
+                id: currentUser.id,
+                updated_at: new Date(),
+                username,
+                house: userHouse,
+                clan: userClan,
+                avatar_url: userAvatarUrl,
+                ...fields,
+            };
+
+            await supabase.from("profiles").upsert(updates);
+        }
+
         function updateUI() {
             if (userNameDisplay) userNameDisplay.textContent = username;
             if (usernameInput) usernameInput.value = username;
-            if (userAvatar)
-                userAvatar.textContent = username.charAt(0).toUpperCase();
+            if (userAvatar) {
+                if (userAvatarUrl) {
+                    userAvatar.innerHTML = `<img src="${userAvatarUrl}" alt="Avatar" class="w-full h-full object-cover rounded-full" />`;
+                } else {
+                    userAvatar.textContent = username.charAt(0).toUpperCase();
+                }
+            }
 
             if (userHouse) {
                 const h = houses.find((item) => item.id === userHouse);
@@ -555,17 +636,18 @@ import Layout from "../layouts/Layout.astro";
             }
         }
 
-        (window as any).joinClan = function (name: string) {
+        (window as any).joinClan = async function (name: string) {
             userClan = name;
-            localStorage.setItem("cigno_clan", userClan);
+            await saveProfileToSupabase({ clan: userClan });
             updateUI();
         };
 
-        updateProfileBtn?.addEventListener("click", () => {
+        updateProfileBtn?.addEventListener("click", async () => {
             if (usernameInput.value.trim()) {
                 username = usernameInput.value.trim();
-                localStorage.setItem("cigno_username", username);
+                await saveProfileToSupabase({ username });
                 updateUI();
+                alert("Nome stellare aggiornato sul cloud!");
             }
         });
 
@@ -636,15 +718,15 @@ import Layout from "../layouts/Layout.astro";
             }
         }
 
-        saveHouseBtn?.addEventListener("click", () => {
+        saveHouseBtn?.addEventListener("click", async () => {
             if (assignedHouse) {
                 userHouse = assignedHouse.id;
-                localStorage.setItem("cigno_house", userHouse);
+                await saveProfileToSupabase({ house: userHouse });
                 updateUI();
                 quizResult?.classList.add("hidden");
                 quizIntro?.classList.remove("hidden");
                 alert(
-                    `Il tuo legame con la ${assignedHouse.name} è stato registrato nei registri stellari.`,
+                    `Il tuo legame con la ${assignedHouse.name} è stato registrato nel cloud.`,
                 );
             }
         });
@@ -660,7 +742,7 @@ import Layout from "../layouts/Layout.astro";
         closeModalBtn?.addEventListener("click", () => {
             clanModal?.classList.add("hidden");
         });
-        submitClanBtn?.addEventListener("click", () => {
+        submitClanBtn?.addEventListener("click", async () => {
             const name = newClanNameInput.value.trim();
             const tag = newClanTagInput.value.trim().toUpperCase();
             if (name && tag) {
@@ -673,7 +755,7 @@ import Layout from "../layouts/Layout.astro";
                 });
                 localStorage.setItem("cigno_clans", JSON.stringify(clans));
                 userClan = name;
-                localStorage.setItem("cigno_clan", userClan);
+                await saveProfileToSupabase({ clan: userClan });
                 newClanNameInput.value = "";
                 newClanTagInput.value = "";
                 clanModal?.classList.add("hidden");
@@ -681,6 +763,6 @@ import Layout from "../layouts/Layout.astro";
             }
         });
 
-        updateUI();
+        initUser();
     </script>
 </Layout>
