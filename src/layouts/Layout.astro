@@ -27,42 +27,51 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
         </script>
     </head>
     <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cigno-blue selection:text-white transition-colors duration-300 min-h-full flex flex-col justify-between relative overflow-x-hidden">
-        <!-- Sfondo fisso elegante con immagine e particelle leggere non-interferenti -->
+        <!-- Sfondo con immagine nitida in movimento fluido (parallasse mouse) e campo di particelle ampiamente arricchito -->
         <div class="fixed inset-0 -z-20 pointer-events-none overflow-hidden">
             <div
-                class="absolute inset-[-5%] bg-cover bg-center opacity-40 dark:opacity-50 animate-space-pulse"
-                style="background-image: url('/assets/space-bg.png');"
+                id="space-bg-layer"
+                class="absolute inset-[-15%] bg-cover bg-center opacity-60 dark:opacity-75 transition-transform duration-100 ease-out will-change-transform"
+                style="background-image: url('/assets/space-bg.png'); image-rendering: high-quality;"
             ></div>
             <canvas
                 id="space-canvas"
-                class="absolute inset-0 w-full h-full opacity-60"
+                class="absolute inset-0 w-full h-full opacity-80 pointer-events-none"
             ></canvas>
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30 pointer-events-none"></div>
         </div>
 
-        <style>
-            @keyframes spacePulse {
-                0% {
-                    transform: scale(1);
-                    filter: brightness(1);
-                }
-                50% {
-                    transform: scale(1.03);
-                    filter: brightness(1.1);
-                }
-                100% {
-                    transform: scale(1);
-                    filter: brightness(1);
-                }
-            }
-            .animate-space-pulse {
-                animation: spacePulse 20s ease-in-out infinite;
-                will-change: transform, filter;
-            }
-        </style>
-
         <script>
-            // Canvas particellare pulito e ottimizzato senza interferire con il DOM
+            // Parallasse del mouse fluida e nitida senza provocare re-layout o glitch sui menu
+            const bgLayer = document.getElementById("space-bg-layer");
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let currentX = 0;
+            let currentY = 0;
+
+            window.addEventListener(
+                "mousemove",
+                (e) => {
+                    mouseX = e.clientX - window.innerWidth / 2;
+                    mouseY = e.clientY - window.innerHeight / 2;
+                },
+                { passive: true },
+            );
+
+            function animateBackground() {
+                // Inerzia morbida per un movimento di parallasse fluido ed elegante
+                currentX += (mouseX * 0.04 - currentX) * 0.06;
+                currentY += (mouseY * 0.04 - currentY) * 0.06;
+
+                if (bgLayer) {
+                    bgLayer.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(1.08)`;
+                }
+
+                requestAnimationFrame(animateBackground);
+            }
+            animateBackground();
+
+            // Canvas ad alte prestazioni con 150+ particelle stellari e flussi di luce Veyr
             const canvas = document.getElementById(
                 "space-canvas",
             ) as HTMLCanvasElement;
@@ -77,41 +86,45 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                 });
 
                 const particles: any[] = [];
-                const numParticles = 40;
+                const numParticles = 150; // Densità particellare aumentata
 
                 for (let i = 0; i < numParticles; i++) {
                     particles.push({
                         x: Math.random() * width,
                         y: Math.random() * height,
-                        radius: Math.random() * 1.5 + 0.5,
+                        radius: Math.random() * 2.2 + 0.6,
                         color:
-                            Math.random() > 0.5
+                            Math.random() > 0.4
                                 ? "rgba(56, 189, 248, "
                                 : "rgba(251, 191, 36, ",
-                        alpha: Math.random() * 0.5 + 0.2,
-                        speedY: -Math.random() * 0.2 - 0.05,
-                        pulse: Math.random() * 0.01 + 0.002,
+                        alpha: Math.random() * 0.8 + 0.2,
+                        speedX: (Math.random() - 0.5) * 0.4,
+                        speedY: (Math.random() - 0.5) * 0.4 - 0.1,
+                        pulse: Math.random() * 0.02 + 0.005,
                     });
                 }
 
                 function drawParticles() {
                     ctx?.clearRect(0, 0, width, height);
                     particles.forEach((p) => {
+                        p.x += p.speedX;
                         p.y += p.speedY;
-                        p.alpha += Math.sin(Date.now() * p.pulse) * 0.005;
+                        p.alpha += Math.sin(Date.now() * p.pulse) * 0.01;
 
-                        if (p.y < 0) {
-                            p.y = height;
-                            p.x = Math.random() * width;
-                        }
+                        if (p.x < 0) p.x = width;
+                        if (p.x > width) p.x = 0;
+                        if (p.y < 0) p.y = height;
+                        if (p.y > height) p.y = 0;
 
                         if (ctx) {
                             ctx.beginPath();
                             ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                             ctx.fillStyle =
                                 p.color +
-                                Math.max(0.1, Math.min(1, p.alpha)) +
+                                Math.max(0.15, Math.min(1, p.alpha)) +
                                 ")";
+                            ctx.shadowBlur = 8;
+                            ctx.shadowColor = p.color + "0.8)";
                             ctx.fill();
                         }
                     });
@@ -379,7 +392,8 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                     if (savedAvatar) {
                         navAvatarImg.src = savedAvatar;
                         navAvatarImg.classList.remove("hidden");
-                        navavatarInitial?.classList.add("hidden");
+                        if (navAvatarInitial)
+                            navAvatarInitial.classList.add("hidden");
                     } else {
                         if (navAvatarInitial) {
                             navAvatarInitial.textContent = savedNick
