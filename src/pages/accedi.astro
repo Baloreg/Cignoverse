@@ -125,7 +125,7 @@ import Layout from "../layouts/Layout.astro";
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: "google",
                 options: {
-                    redirectTo: window.location.origin + "/profilo",
+                    redirectTo: window.location.origin + "/smistamento",
                 },
             });
             if (error && msg) {
@@ -173,12 +173,13 @@ import Layout from "../layouts/Layout.astro";
                         "mt-4 text-center text-xs font-medium text-red-500";
                 }
             } else {
-                if (msg) {
-                    msg.textContent =
-                        "Registrazione completata! Controlla la tua email o accedi.";
-                    msg.className =
-                        "mt-4 text-center text-xs font-medium text-emerald-500";
-                }
+                // Prova ad effettuare subito il login per procedere allo smistamento
+                const { error: loginError } =
+                    await supabase.auth.signInWithPassword({
+                        email,
+                        password,
+                    });
+                window.location.href = "/smistamento";
             }
         });
     </script>
