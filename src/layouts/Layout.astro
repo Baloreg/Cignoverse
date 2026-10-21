@@ -26,7 +26,32 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
             }
         </script>
     </head>
-    <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-cigno-blue selection:text-white transition-colors duration-300 min-h-full flex flex-col justify-between">
+    <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cigno-blue selection:text-white transition-colors duration-300 min-h-full flex flex-col justify-between relative overflow-x-hidden">
+        <!-- Sfondo animato stellare -->
+        <div class="fixed inset-0 -z-20 pointer-events-none overflow-hidden">
+            <div
+                class="absolute inset-0 bg-cover bg-center animate-space-zoom opacity-40 dark:opacity-50"
+                style="background-image: url('/assets/space-bg.png');"
+            ></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent"></div>
+        </div>
+
+        <style>
+            @keyframes spaceZoom {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.08);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+            .animate-space-zoom {
+                animation: spaceZoom 25s ease-in-out infinite;
+            }
+        </style>
         <!-- Skip link per l'accessibilità -->
         <a
             href="#main-content"
