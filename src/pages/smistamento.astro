@@ -1,0 +1,313 @@
+---
+id: "smistamento-page"
+title: "Smistamento delle Casate — Cignoverse"
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Smistamento delle Casate — Cignoverse">
+    <div class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center gap-2 bg-cigno-blue/10 text-cigno-blue dark:bg-cigno-blue/20 dark:text-blue-400 px-3.5 py-1 rounded-full text-xs font-semibold mb-4 animate-fade-in">
+                <span>Rito di Smistamento • Le Cinque Corone</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3">
+                Scopri la tua Casata
+            </h1>
+            <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base max-w-xl mx-auto">
+                Rispondi alle domande sulla tua personalità. Il test può essere completato una sola volta: la tua appartenenza sarà custodita nel tuo profilo.
+            </p>
+        </div>
+
+        <!-- Quiz Box Container -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-16 -bottom-16 w-48 h-48 bg-cigno-blue/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Quiz Intro / Check Existing House -->
+            <div id="quiz-intro" class="text-center py-10 space-y-6">
+                <div class="w-20 h-20 mx-auto bg-cigno-blue/10 rounded-2xl flex items-center justify-center text-cigno-blue shadow-inner">
+                    <svg class="w-10 h-10 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                </div>
+                <h2 id="intro-title" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                    Pronto ad affrontare lo smistamento?
+                </h2>
+                <p id="intro-desc" class="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+                    Il rito analizzerà il tuo profilo psicologico e comportamentale per determinare a quale Casata appartieni.
+                </p>
+                <div>
+                    <button id="start-quiz-btn" class="bg-cigno-blue text-white px-8 py-3.5 rounded-2xl font-semibold hover:opacity-90 transition-all shadow-lg shadow-cigno-blue/25 hover:scale-105 active:scale-95 duration-200">
+                        Inizia il Test di Smistamento
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Section -->
+            <div id="quiz-questions" class="hidden space-y-8 animate-fade-in">
+                <!-- Barra di Progresso -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                        <span id="question-counter">Domanda 1 di 5</span>
+                        <span id="quiz-progress-text">20%</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-cigno-blue transition-all duration-300 rounded-full" style="width: 20%;"></div>
+                    </div>
+                </div>
+
+                <!-- Domanda -->
+                <h3 id="question-title" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white text-center sm:text-left leading-snug"></h3>
+
+                <!-- Opzioni (2 o 4 scelte neutre ma rivelatrici di personalità) -->
+                <div id="question-options" class="grid grid-cols-1 gap-3.5"></div>
+            </div>
+
+            <!-- Quiz Result Section -->
+            <div id="quiz-result" class="hidden text-center py-8 space-y-6 animate-scale-up">
+                <div class="inline-block p-3 rounded-2xl bg-cigno-blue/10 text-cigno-blue mb-1">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Casata Assegnata dal Rito</span>
+                    <h3 id="result-house-name" class="text-3xl sm:text-4xl font-extrabold mt-2 mb-3"></h3>
+                </div>
+                <p id="result-house-desc" class="text-slate-600 dark:text-slate-300 max-w-lg mx-auto text-sm sm:text-base leading-relaxed"></p>
+
+                <div class="pt-4 flex flex-wrap justify-center gap-4">
+                    <button id="confirm-house-btn" class="bg-cigno-blue text-white px-8 py-3.5 rounded-2xl font-semibold hover:opacity-95 transition-all shadow-lg shadow-cigno-blue/25 hover:scale-105 active:scale-95 duration-200">
+                        Conferma Casata e Vai al Profilo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scaleUp {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.35s ease-out forwards;
+        }
+        .animate-scale-up {
+            animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+
+    <script>
+        import { supabase } from "../lib/supabase";
+
+        const houses = [
+            {
+                id: "veyr",
+                name: "Casata Veyr",
+                color: "text-amber-400",
+                desc: "Sei metodico, ami l'ordine, l'efficienza e la precisione strutturata. Ti distingui per la capacità di analizzare i sistemi complessi e far funzionare ogni ingranaggio alla perfezione.",
+            },
+            {
+                id: "veth",
+                name: "Casata Veth",
+                color: "text-blue-400",
+                desc: "Sei un esploratore nato, flessibile e intuitivo. Ami la libertà di movimento, scoprire nuove direzioni e trovare soluzioni brillanti quando tutto sembra immobile.",
+            },
+            {
+                id: "deneb",
+                name: "Casata Deneb",
+                color: "text-purple-400",
+                desc: "Possiedi uno spirito di leadership naturale, eleganza e forte senso di responsabilità. Sai guidare gli altri con fermezza ed ispirare fiducia in ogni situazione.",
+            },
+            {
+                id: "frattura",
+                name: "I Liberi della Frattura",
+                color: "text-emerald-400",
+                desc: "Sei uno spirito indipendente, ribelle e aperto alla cooperazione spontanea. Rifiuti i dogmi rigidi e credi fermamente nella condivisione aperta e nella libertà collettiva.",
+            },
+        ];
+
+        // Domande neutre, basate su personalità e scelte anche tra due parole
+        const questions = [
+            {
+                title: "Di fronte a un problema complesso, qual è il tuo primo istinto?",
+                options: [
+                    { text: "Analizzare la struttura e ottimizzare ogni dettaglio", house: "veyr" },
+                    { text: "Cercare una via d'uscita originale e immediata", house: "veth" },
+                    { text: "Prendere il controllo e coordinare gli altri", house: "deneb" },
+                    { text: "Rifiutare gli schemi rigidi e agire in autonomia", house: "frattura" },
+                ],
+            },
+            {
+                title: "Scegli al volo la coppia di parole che risuona di più con il tuo modo di essere:",
+                options: [
+                    { text: "Controllo / Precisione", house: "veyr" },
+                    { text: "Esplorazione / Movimento", house: "veth" },
+                    { text: "Responsabilità / Autorità", house: "deneb" },
+                    { text: "Ribellione / Condivisione", house: "frattura" },
+                ],
+            },
+            {
+                title: "Come preferisci lavorare in un team?",
+                options: [
+                    { text: "Garantendo che ogni processo sia efficiente e ordinato", house: "veyr" },
+                    { text: "Portando idee fresche e adattandomi ai cambiamenti", house: "veth" },
+                    { text: "Guidando il gruppo con visione strategica e carisma", house: "deneb" },
+                    { text: "Collaborando alla pari senza capi o gerarchie", house: "frattura" },
+                ],
+            },
+            {
+                title: "Scegli tra queste due parole quella che preferisci:",
+                options: [
+                    { text: "Ordine", house: "veyr" },
+                    { text: "Libertà", house: "frattura" },
+                ],
+            },
+            {
+                title: "Qual è il tuo più grande punto di forza?",
+                options: [
+                    { text: "La costanza e la precisione metodica", house: "veyr" },
+                    { text: "L'intuito e la rapidità di adattamento", house: "veth" },
+                    { text: "La sicurezza e la leadership naturale", house: "deneb" },
+                    { text: "La creatività indipendente e l'apertura mentale", house: "frattura" },
+                ],
+            },
+        ];
+
+        let currentQuizIndex = 0;
+        let scores = { veyr: 0, veth: 0, deneb: 0, frattura: 0 };
+        let assignedHouse: any = null;
+        let currentUser: any = null;
+        let existingHouse: string | null = null;
+
+        const quizIntro = document.getElementById("quiz-intro");
+        const introTitle = document.getElementById("intro-title");
+        const introDesc = document.getElementById("intro-desc");
+        const startQuizBtn = document.getElementById("start-quiz-btn");
+        const quizQuestions = document.getElementById("quiz-questions");
+        const quizResult = document.getElementById("quiz-result");
+        const questionTitle = document.getElementById("question-title");
+        const questionCounter = document.getElementById("question-counter");
+        const quizProgressText = document.getElementById("quiz-progress-text");
+        const progressBar = document.getElementById("progress-bar");
+        const questionOptions = document.getElementById("question-options");
+        const resultHouseName = document.getElementById("result-house-name");
+        const resultHouseDesc = document.getElementById("result-house-desc");
+        const confirmHouseBtn = document.getElementById("confirm-house-btn");
+
+        async function init() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session && session.user) {
+                currentUser = session.user;
+                existingHouse = localStorage.getItem("cigno_house");
+                // Controlla anche nel database se presente
+                const { data: profile } = await supabase.from("profiles").select("house").eq("id", currentUser.id).single();
+                if (profile && profile.house) {
+                    existingHouse = profile.house;
+                    localStorage.setItem("cigno_house", existingHouse);
+                }
+            } else {
+                existingHouse = localStorage.getItem("cigno_house");
+            }
+
+            if (existingHouse) {
+                const found = houses.find(h => h.id === existingHouse);
+                if (found && introTitle && introDesc && startQuizBtn) {
+                    introTitle.textContent = `Hai già completato lo smistamento!`;
+                    introDesc.innerHTML = `Risulti assegnato alla <strong class="${found.color}">${found.name}</strong>.<br>Il test può essere rifatto solo accedendo al tuo profilo.`;
+                    startQuizBtn.textContent = "Rifai il test di smistamento";
+                }
+            }
+        }
+
+        startQuizBtn?.addEventListener("click", () => {
+            quizIntro?.classList.add("hidden");
+            quizQuestions?.classList.remove("hidden");
+            currentQuizIndex = 0;
+            scores = { veyr: 0, veth: 0, deneb: 0, frattura: 0 };
+            loadQuestion();
+        });
+
+        function loadQuestion() {
+            const q = questions[currentQuizIndex];
+            const progressPercent = Math.round(((currentQuizIndex + 1) / questions.length) * 100);
+
+            if (quizQuestions) {
+                quizQuestions.classList.remove("animate-fade-in");
+                void quizQuestions.offsetWidth;
+                quizQuestions.classList.add("animate-fade-in");
+            }
+
+            if (questionTitle) questionTitle.textContent = q.title;
+            if (questionCounter) questionCounter.textContent = `Domanda ${currentQuizIndex + 1} di ${questions.length}`;
+            if (quizProgressText) quizProgressText.textContent = `${progressPercent}%`;
+            if (progressBar) progressBar.style.width = `${progressPercent}%`;
+
+            if (questionOptions) {
+                questionOptions.innerHTML = q.options.map(opt => `
+                    <button data-house="${opt.house}" class="quiz-option text-left p-5 rounded-2xl bg-slate-800/80 border border-slate-700/80 hover:border-cigno-blue hover:bg-cigno-blue/15 text-white font-medium text-base transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-md active:scale-95 flex items-center justify-between group">
+                        <span>${opt.text}</span>
+                        <span class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center text-xs group-hover:border-cigno-blue group-hover:bg-cigno-blue group-hover:text-white transition-all">→</span>
+                    </button>
+                `).join("");
+
+                document.querySelectorAll(".quiz-option").forEach(btn => {
+                    btn.addEventListener("click", (e) => {
+                        const targetBtn = e.currentTarget as HTMLElement;
+                        targetBtn.classList.add("bg-cigno-blue", "text-white", "border-cigno-blue", "scale-[1.02]");
+                        setTimeout(() => {
+                            const house = targetBtn.getAttribute("data-house") as keyof typeof scores;
+                            scores[house]++;
+                            currentQuizIndex++;
+                            if (currentQuizIndex < questions.length) {
+                                loadQuestion();
+                            } else {
+                                finishQuiz();
+                            }
+                        }, 280);
+                    });
+                });
+            }
+        }
+
+        function finishQuiz() {
+            quizQuestions?.classList.add("hidden");
+            quizResult?.classList.remove("hidden");
+
+            let bestHouse = "veyr";
+            let maxScore = -1;
+            for (const h in scores) {
+                if (scores[h] > maxScore) {
+                    maxScore = scores[h];
+                    bestHouse = h;
+                }
+            }
+
+            assignedHouse = houses.find(h => h.id === bestHouse);
+            if (resultHouseName) {
+                resultHouseName.textContent = assignedHouse.name;
+                resultHouseName.className = `text-4xl sm:text-5xl font-extrabold tracking-tight ${assignedHouse.color}`;
+            }
+            if (resultHouseDesc) {
+                resultHouseDesc.textContent = assignedHouse.desc;
+            }
+        }
+
+        confirmHouseBtn?.addEventListener("click", async () => {
+            if (assignedHouse) {
+                localStorage.setItem("cigno_house", assignedHouse.id);
+                if (currentUser) {
+                    await supabase.from("profiles").upsert({
+                        id: currentUser.id,
+                        house: assignedHouse.id,
+                        updated_at: new Date()
+                    });
+                }
+                window.location.href = "/profilo";
+            }
+        });
+
+        init();
+    </script>
+</Layout>

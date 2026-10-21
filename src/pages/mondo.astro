@@ -64,110 +64,23 @@ import Layout from "../layouts/Layout.astro";
             </div>
         </div>
 
-        <!-- QUIZ INTERATTIVO AVANZATO DI SMISTAMENTO -->
-        <div id="smistamento-section" class="max-w-4xl mx-auto mb-20">
-            <div class="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden transition-all duration-500 min-h-[480px] flex flex-col justify-between">
-                <!-- Glows decorativi -->
-                <div class="absolute -top-20 -left-20 w-60 h-60 bg-cigno-blue/20 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
-
-                <!-- 1. INTRO / BENVERNUTO QUIZ -->
-                <div
-                    id="quiz-intro"
-                    class="text-center py-6 animate-fade-in space-y-6"
-                >
-                    <span class="inline-block bg-cigno-blue/10 text-cigno-blue font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-widest border border-cigno-blue/20">
-                        Rito del Legamento Stellare
-                    </span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Scopri la tua Casata nelle Cinque Corone
-                    </h2>
-                    <p class="text-slate-300 max-w-xl mx-auto text-base leading-relaxed">
-                        Un test di personalità profondo e intuitivo basato sulle
-                        tue inclinazioni naturali, le tue scelte morali e il tuo
-                        istinto primordiale nel cosmo di Deneb.
-                    </p>
-                    <div class="pt-4">
-                        <button
-                            id="start-quiz-btn"
-                            class="bg-gradient-to-r from-cigno-blue to-blue-600 hover:from-blue-500 hover:to-cigno-blue text-white px-8 py-4 rounded-2xl font-bold text-base shadow-xl shadow-cigno-blue/25 transform hover:scale-105 transition-all duration-300"
-                        >
-                            Inizia lo Smistamento
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 2. DOMANDE DEL QUIZ -->
-                <div
-                    id="quiz-questions"
-                    class="hidden space-y-8 animate-slide-up"
-                >
-                    <!-- Barra di Progresso -->
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center text-xs font-semibold uppercase tracking-wider text-slate-400">
-                            <span id="question-counter">Domanda 1 di 6</span>
-                            <span id="quiz-progress-text">16%</span>
-                        </div>
-                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                            <div
-                                id="progress-bar"
-                                class="h-full bg-gradient-to-r from-cigno-blue to-purple-500 w-1/6 transition-all duration-500"
-                            ></div>
-                        </div>
-                    </div>
-
-                    <!-- Titolo Domanda -->
-                    <div class="text-center sm:text-left">
-                        <h3
-                            id="question-title"
-                            class="text-2xl sm:text-3xl font-extrabold text-white leading-snug"
-                        ></h3>
-                    </div>
-
-                    <!-- Opzioni / Pulsanti di Scelta -->
-                    <div
-                        id="question-options"
-                        class="grid grid-cols-1 sm:grid-cols-2 gap-4"
-                    >
-                        <!-- Inserito dinamicamente via JS -->
-                    </div>
-                </div>
-
-                <!-- 3. RISULTATO FINALE E ASSEGNAZIONE -->
-                <div
-                    id="quiz-result"
-                    class="hidden text-center py-6 animate-scale-up space-y-6"
-                >
-                    <div class="inline-block p-4 rounded-full bg-cigno-blue/10 border border-cigno-blue/30 mb-2 animate-pulse">
-                        <span class="text-xs font-bold uppercase tracking-widest text-cigno-blue">
-                            Casata Rivelata
-                        </span>
-                    </div>
-                    <h3
-                        id="result-house-name"
-                        class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight"
-                    ></h3>
-                    <p
-                        id="result-house-desc"
-                        class="text-slate-300 max-w-xl mx-auto text-base leading-relaxed"
-                    ></p>
-
-                    <div class="pt-6 flex flex-col sm:flex-row justify-center gap-4">
-                        <button
-                            id="save-house-btn"
-                            class="bg-cigno-blue text-white px-8 py-3.5 rounded-xl font-bold text-sm hover:opacity-90 transition-all shadow-xl shadow-cigno-blue/30"
-                        >
-                            Conferma e Salva nel Profilo Cloud
-                        </button>
-                        <button
-                            id="retake-btn"
-                            class="bg-slate-800 text-slate-300 hover:bg-slate-700 px-6 py-3.5 rounded-xl font-medium text-sm transition-colors"
-                        >
-                            Ripeti lo Smistamento
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <!-- Banner per accedere al Test di Smistamento Separato -->
+        <div class="max-w-3xl mx-auto mb-20 bg-gradient-to-r from-cigno-blue/20 via-purple-500/20 to-amber-500/20 border border-slate-800 rounded-3xl p-8 sm:p-12 text-center shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-cigno-blue/10 rounded-full blur-2xl pointer-events-none"></div>
+            <h2 class="text-3xl font-extrabold text-white mb-3">
+                Vuoi scoprire a quale Casata appartieni?
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base max-w-lg mx-auto mb-6">
+                Affronta il rito di smistamento interattivo. Il test può essere
+                completato una sola volta per account (modificabile dal
+                profilo).
+            </p>
+            <a
+                href="/smistamento"
+                class="inline-block bg-cigno-blue text-white px-8 py-3.5 rounded-2xl font-semibold hover:opacity-90 transition-all shadow-lg shadow-cigno-blue/25 hover:scale-105 duration-200"
+            >
+                Vai al Test di Smistamento →
+            </a>
         </div>
 
         <!-- Sezione Clan & Guerre tra Corone -->
@@ -276,182 +189,8 @@ import Layout from "../layouts/Layout.astro";
         </div>
     </div>
 
-    <style>
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes scaleUp {
-            from {
-                opacity: 0;
-                transform: scale(0.92);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        .animate-slide-up {
-            animation: slideUp 0.4s ease-out forwards;
-        }
-        .animate-scale-up {
-            animation: scaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-    </style>
-
     <script>
         import { supabase } from "../lib/supabase";
-
-        const houses = [
-            {
-                id: "veyr",
-                name: "Casata Veyr",
-                color: "text-amber-400",
-                desc: "Ingegneri, custodi dell'energia e dell'efficienza suprema. Dominati dalla logica, controllano i reattori e la linfa energetica che muove l'intero Cignoverse.",
-            },
-            {
-                id: "veth",
-                name: "Casata Veth",
-                color: "text-blue-400",
-                desc: "Navigatori delle rotte stellari e dei portali quantistici. Intuitivi, audaci ed esperti nello stabilizzare le comunicazioni attraverso lo spazio profondo.",
-            },
-            {
-                id: "deneb",
-                name: "Casata Deneb",
-                color: "text-purple-400",
-                desc: "Eredi nobiliari dell'antico Impero Cygnico. Dotati di leadership, disciplina ed eleganza, difendono le tradizioni e ambiscono al Trono della Croce del Nord.",
-            },
-            {
-                id: "frattura",
-                name: "I Liberi della Frattura",
-                color: "text-emerald-400",
-                desc: "Pionieri, hacker e spiriti indipendenti. Rifiutano ogni dogma o giogo feudale per difendere la libertà, l'open source e la condivisione tra i mondi.",
-            },
-        ];
-
-        // Domande di smistamento interattive, lore-accurate, basate su personalità e scelte anche tra due parole
-        const questions = [
-            {
-                title: "Di fronte all'ignoto dello spazio profondo, cosa guida il tuo istinto?",
-                options: [
-                    {
-                        text: "La struttura e l'ottimizzazione logistica",
-                        house: "veyr",
-                    },
-                    {
-                        text: "L'esplorazione e la scoperta di nuove rotte",
-                        house: "veth",
-                    },
-                    {
-                        text: "L'onore della dinastia e la leadership",
-                        house: "deneb",
-                    },
-                    {
-                        text: "La libertà assoluta e l'indipendenza",
-                        house: "frattura",
-                    },
-                ],
-            },
-            {
-                title: "Scegli al volo tra queste due parole quella che risuona di più con la tua anima:",
-                options: [
-                    { text: "Controllo / Progresso", house: "veyr" },
-                    { text: "Orizzonte / Flusso", house: "veth" },
-                    { text: "Corim / Autorità", house: "deneb" },
-                    { text: "Ribellione / Condivisione", house: "frattura" },
-                ],
-            },
-            {
-                title: "Durante una crisi critica nei reattori di Deneb, qual è la tua priorità?",
-                options: [
-                    {
-                        text: "Ricalibrare i flussi Veyr con precisione assoluta.",
-                        house: "veyr",
-                    },
-                    {
-                        text: "Aprire un varco Veth di emergenza per fuggire.",
-                        house: "veth",
-                    },
-                    {
-                        text: "Proteggere le reliquie e guidare i superstiti.",
-                        house: "deneb",
-                    },
-                    {
-                        text: "Manomettere i sistemi centrali per liberare tutti.",
-                        house: "frattura",
-                    },
-                ],
-            },
-            {
-                title: "Scegli tra questa coppia di concetti fondamentali:",
-                options: [
-                    { text: "Ordine / Regola", house: "veyr" },
-                    { text: "Viaggio / Portale", house: "veth" },
-                    { text: "Dinastia / Trono", house: "deneb" },
-                    { text: "Open / Codice", house: "frattura" },
-                ],
-            },
-            {
-                title: "Quale ambiente riflette meglio il tuo stile di vita ideale?",
-                options: [
-                    {
-                        text: "Un reattore galattico perfettamente calibrato.",
-                        house: "veyr",
-                    },
-                    {
-                        text: "La plancia di comando di una nave stellare in movimento.",
-                        house: "veth",
-                    },
-                    {
-                        text: "Una magnifica sala del trono orbitale.",
-                        house: "deneb",
-                    },
-                    {
-                        text: "Un rifugio digitale open source ai margini della Rete.",
-                        house: "frattura",
-                    },
-                ],
-            },
-            {
-                title: "Ultima scelta decisiva: come definisci il tuo spirito?",
-                options: [
-                    { text: "Metodico", house: "veyr" },
-                    { text: "Intuizione", house: "veth" },
-                    { text: "Sovrano", house: "deneb" },
-                    { text: "Libero", house: "frattura" },
-                ],
-            },
-        ];
-
-        let currentQuizIndex = 0;
-        let scores: Record<string, number> = {
-            veyr: 0,
-            veth: 0,
-            deneb: 0,
-            frattura: 0,
-        };
-        let assignedHouse: any = null;
-        let currentUser: any = null;
-        let username = "CygnusPilot";
-        let userHouse: string | null = null;
-        let userClan = "Nessuno";
 
         let clans = JSON.parse(
             localStorage.getItem("cigno_clans") ||
@@ -480,20 +219,6 @@ import Layout from "../layouts/Layout.astro";
                 ]),
         );
 
-        const startQuizBtn = document.getElementById("start-quiz-btn");
-        const quizIntro = document.getElementById("quiz-intro");
-        const quizQuestions = document.getElementById("quiz-questions");
-        const quizResult = document.getElementById("quiz-result");
-        const questionTitle = document.getElementById("question-title");
-        const questionCounter = document.getElementById("question-counter");
-        const quizProgressText = document.getElementById("quiz-progress-text");
-        const progressBar = document.getElementById("progress-bar");
-        const questionOptions = document.getElementById("question-options");
-        const resultHouseName = document.getElementById("result-house-name");
-        const resultHouseDesc = document.getElementById("result-house-desc");
-        const saveHouseBtn = document.getElementById("save-house-btn");
-        const retakeBtn = document.getElementById("retake-btn");
-
         const clansList = document.getElementById("clans-list");
         const clansLeaderboard = document.getElementById("clans-leaderboard");
         const openCreateClanModal = document.getElementById(
@@ -509,212 +234,39 @@ import Layout from "../layouts/Layout.astro";
             "new-clan-tag",
         ) as HTMLInputElement;
 
-        async function initUser() {
-            const {
-                data: { session },
-            } = await supabase.auth.getSession();
-            if (session && session.user) {
-                currentUser = session.user;
-                const email = currentUser.email || "";
-                username =
-                    currentUser.user_metadata?.full_name || email.split("@")[0];
-
-                const { data: profile } = await supabase
-                    .from("profiles")
-                    .select("*")
-                    .eq("id", currentUser.id)
-                    .single();
-
-                if (profile) {
-                    if (profile.username) username = profile.username;
-                    if (profile.house) userHouse = profile.house;
-                    if (profile.clan) userClan = profile.clan;
-                }
-            } else {
-                username =
-                    localStorage.getItem("cigno_username") || "CygnusPilot";
-                userHouse = localStorage.getItem("cigno_house") || null;
-                userClan = localStorage.getItem("cigno_clan") || "Nessuno";
-            }
-            renderClans();
-        }
-
-        async function saveProfileToSupabase(fields: {
-            house?: string | null;
-            clan?: string;
-        }) {
-            if (!currentUser) {
-                if (fields.house !== undefined)
-                    fields.house
-                        ? localStorage.setItem("cigno_house", fields.house)
-                        : localStorage.removeItem("cigno_house");
-                if (fields.clan)
-                    localStorage.setItem("cigno_clan", fields.clan);
-                return;
-            }
-
-            await supabase.from("profiles").upsert({
-                id: currentUser.id,
-                updated_at: new Date(),
-                username,
-                house: userHouse,
-                clan: userClan,
-                ...fields,
-            });
-        }
-
         function renderClans() {
             const sorted = [...clans].sort((a, b) => b.points - a.points);
-
             if (clansList) {
                 clansList.innerHTML = clans
                     .map(
-                        (c) => `
-          <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between">
+                        (clan: any) => `
+          <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700 flex items-center justify-between">
             <div>
-              <span class="text-xs font-mono font-bold text-cigno-blue mr-2">${c.tag}</span>
-              <span class="font-bold text-white">${c.name}</span>
-              <p class="text-xs text-slate-400 mt-0.5">${c.members} membri • ${c.points} punti</p>
+              <span class="text-xs font-bold text-cigno-blue">${clan.tag}</span>
+              <h4 class="font-bold text-white text-sm">${clan.name}</h4>
+              <p class="text-xs text-slate-400">Membri: ${clan.members} • Punti: ${clan.points}</p>
             </div>
-            <button onclick="window.joinClan('${c.name}')" class="text-xs px-3 py-1.5 rounded-lg bg-slate-700 text-slate-200 font-medium hover:bg-cigno-blue hover:text-white transition-colors">
-              ${userClan === c.name ? "Il tuo Clan" : "Unisciti"}
-            </button>
           </div>
         `,
                     )
                     .join("");
             }
-
             if (clansLeaderboard) {
                 clansLeaderboard.innerHTML = sorted
                     .map(
-                        (c, index) => `
-          <div class="flex items-center justify-between p-3 rounded-xl bg-slate-800/40">
+                        (clan: any, idx: number) => `
+          <div class="flex items-center justify-between p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 text-sm">
             <div class="flex items-center gap-3">
-              <span class="font-bold text-sm text-slate-400">#${index + 1}</span>
-              <div>
-                <span class="font-semibold text-white text-sm">${c.name}</span>
-                <span class="text-xs text-slate-500 ml-1">${c.tag}</span>
-              </div>
+              <span class="font-extrabold text-slate-400 w-5">#${idx + 1}</span>
+              <span class="font-bold text-white">${clan.name} <span class="text-xs text-cigno-blue">${clan.tag}</span></span>
             </div>
-            <span class="text-sm font-bold text-cigno-blue">${c.points} pt</span>
+            <span class="font-semibold text-amber-400">${clan.points} pt</span>
           </div>
         `,
                     )
                     .join("");
             }
         }
-
-        (window as any).joinClan = async function (name: string) {
-            userClan = name;
-            await saveProfileToSupabase({ clan: userClan });
-            renderClans();
-        };
-
-        startQuizBtn?.addEventListener("click", () => {
-            quizIntro?.classList.add("hidden");
-            quizQuestions?.classList.remove("hidden");
-            currentQuizIndex = 0;
-            scores = { veyr: 0, veth: 0, deneb: 0, frattura: 0 };
-            loadQuestion();
-        });
-
-        function loadQuestion() {
-            const q = questions[currentQuizIndex];
-            const progressPercent = Math.round(
-                ((currentQuizIndex + 1) / questions.length) * 100,
-            );
-
-            if (quizQuestions) {
-                quizQuestions.classList.remove("animate-fade-in");
-                void quizQuestions.offsetWidth; // trigger reflow for animation
-                quizQuestions.classList.add("animate-fade-in");
-            }
-
-            if (questionTitle) questionTitle.textContent = q.title;
-            if (questionCounter)
-                questionCounter.textContent = `Domanda ${currentQuizIndex + 1} di ${questions.length}`;
-            if (quizProgressText)
-                quizProgressText.textContent = `${progressPercent}%`;
-            if (progressBar) progressBar.style.width = `${progressPercent}%`;
-
-            if (questionOptions) {
-                questionOptions.innerHTML = q.options
-                    .map(
-                        (opt) => `
-          <button data-house="${opt.house}" class="quiz-option text-left p-5 rounded-2xl bg-slate-900/90 border border-slate-700/80 hover:border-cigno-blue hover:bg-cigno-blue/15 text-white font-medium text-base transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-md active:scale-95">
-            ${opt.text}
-          </button>
-        `,
-                    )
-                    .join("");
-
-                document.querySelectorAll(".quiz-option").forEach((btn) => {
-                    btn.addEventListener("click", (e) => {
-                        const targetBtn = e.currentTarget as HTMLElement;
-                        targetBtn.classList.add(
-                            "bg-cigno-blue",
-                            "text-white",
-                            "scale-105",
-                        );
-                        setTimeout(() => {
-                            const house = targetBtn.getAttribute(
-                                "data-house",
-                            ) as keyof typeof scores;
-                            scores[house]++;
-                            currentQuizIndex++;
-                            if (currentQuizIndex < questions.length) {
-                                loadQuestion();
-                            } else {
-                                finishQuiz();
-                            }
-                        }, 250);
-                    });
-                });
-            }
-        }
-
-        function finishQuiz() {
-            quizQuestions?.classList.add("hidden");
-            quizResult?.classList.remove("hidden");
-
-            let bestHouse = "veyr";
-            let maxScore = -1;
-            for (const h in scores) {
-                if (scores[h] > maxScore) {
-                    maxScore = scores[h];
-                    bestHouse = h;
-                }
-            }
-
-            assignedHouse = houses.find((h) => h.id === bestHouse);
-            if (resultHouseName) {
-                resultHouseName.textContent = assignedHouse.name;
-                resultHouseName.className = `text-4xl sm:text-5xl font-extrabold tracking-tight ${assignedHouse.color}`;
-            }
-            if (resultHouseDesc) {
-                resultHouseDesc.textContent = assignedHouse.desc;
-            }
-        }
-
-        saveHouseBtn?.addEventListener("click", async () => {
-            if (assignedHouse) {
-                userHouse = assignedHouse.id;
-                await saveProfileToSupabase({ house: userHouse });
-                alert(
-                    `Complimenti! La tua Casata (${assignedHouse.name}) è stata salvata con successo sul tuo account.`,
-                );
-                window.location.href = "/profilo";
-            }
-        });
-
-        retakeBtn?.addEventListener("click", () => {
-            quizResult?.classList.add("hidden");
-            quizQuestions?.classList.remove("hidden");
-            currentQuizIndex = 0;
-            scores = { veyr: 0, veth: 0, deneb: 0, frattura: 0 };
-            loadQuestion();
-        });
 
         openCreateClanModal?.addEventListener("click", () => {
             clanModal?.classList.remove("hidden");
@@ -722,7 +274,7 @@ import Layout from "../layouts/Layout.astro";
         closeModalBtn?.addEventListener("click", () => {
             clanModal?.classList.add("hidden");
         });
-        submitClanBtn?.addEventListener("click", async () => {
+        submitClanBtn?.addEventListener("click", () => {
             const name = newClanNameInput.value.trim();
             const tag = newClanTagInput.value.trim().toUpperCase();
             if (name && tag) {
@@ -734,8 +286,6 @@ import Layout from "../layouts/Layout.astro";
                     members: 1,
                 });
                 localStorage.setItem("cigno_clans", JSON.stringify(clans));
-                userClan = name;
-                await saveProfileToSupabase({ clan: userClan });
                 newClanNameInput.value = "";
                 newClanTagInput.value = "";
                 clanModal?.classList.add("hidden");
@@ -743,6 +293,6 @@ import Layout from "../layouts/Layout.astro";
             }
         });
 
-        initUser();
+        renderClans();
     </script>
 </Layout>
