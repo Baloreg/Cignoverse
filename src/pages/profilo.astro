@@ -1,203 +1,375 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Profilo Utente — Cignoverse">
-  <div class="py-16 px-4 sm:px-6 lg:px-8 max-w-xl mx-auto">
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 sm:p-10 shadow-sm">
-      <!-- Header Profilo con Avatar Circolare e Overlay Matita -->
-      <div class="flex flex-col items-center text-center mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div class="relative group cursor-pointer mb-4" id="avatar-wrapper" title="Clicca per cambiare immagine">
-          <div id="avatar-container" class="w-28 h-28 rounded-full bg-gradient-to-br from-cigno-blue to-blue-600 text-white flex items-center justify-center font-extrabold text-4xl overflow-hidden shadow-xl shadow-cigno-blue/20 border-4 border-white dark:border-slate-800">
-            <span id="avatar-initial">?</span>
-            <img id="avatar-img" src="" alt="Avatar" class="w-full h-full object-cover hidden" />
-          </div>
-          <!-- Overlay con icona matita al passaggio del mouse -->
-          <div class="absolute inset-0 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white">
-            <svg class="w-7 h-7 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-            <span class="text-[11px] font-semibold">Modifica</span>
-          </div>
-          <input type="file" id="avatar-file-input" accept="image/*" class="hidden" />
+    <div class="py-16 px-4 sm:px-6 lg:px-8 max-w-xl mx-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 sm:p-10 shadow-sm">
+            <!-- Header Profilo con Avatar Circolare e Overlay Matita -->
+            <div class="flex flex-col items-center text-center mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+                <div
+                    class="relative group cursor-pointer mb-4"
+                    id="avatar-wrapper"
+                    title="Clicca per cambiare immagine"
+                >
+                    <div
+                        id="avatar-container"
+                        class="w-28 h-28 rounded-full bg-gradient-to-br from-cigno-blue to-blue-600 text-white flex items-center justify-center font-extrabold text-4xl overflow-hidden shadow-xl shadow-cigno-blue/20 border-4 border-white dark:border-slate-800"
+                    >
+                        <span id="avatar-initial">?</span>
+                        <img
+                            id="avatar-img"
+                            src=""
+                            alt="Avatar"
+                            class="w-full h-full object-cover hidden"
+                        />
+                    </div>
+                    <!-- Overlay con icona matita al passaggio del mouse -->
+                    <div class="absolute inset-0 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white">
+                        <svg
+                            class="w-7 h-7 mb-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                            ></path>
+                        </svg>
+                        <span class="text-[11px] font-semibold">Modifica</span>
+                    </div>
+                    <input
+                        type="file"
+                        id="avatar-file-input"
+                        accept="image/*"
+                        class="hidden"
+                    />
+                </div>
+
+                <!-- Nickname: Nome visualizzato con matita -->
+                <div
+                    id="nickname-display-container"
+                    class="flex items-center justify-center gap-2 mb-1"
+                >
+                    <h1
+                        id="user-display-name"
+                        class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight"
+                    >
+                        Caricamento...
+                    </h1>
+                    <button
+                        id="edit-nickname-btn"
+                        class="p-1.5 rounded-lg text-slate-400 hover:text-cigno-blue hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        title="Modifica nickname"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Input che rimpiazza direttamente il nome durante la modifica -->
+                <div
+                    id="nickname-edit-container"
+                    class="hidden items-center justify-center gap-2 mb-1"
+                >
+                    <input
+                        type="text"
+                        id="nickname-input"
+                        placeholder="Nickname..."
+                        class="text-xl font-bold text-center text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 border-2 border-cigno-blue rounded-xl px-3 py-1 focus:outline-none max-w-[220px]"
+                    />
+                    <button
+                        id="save-nickname-btn"
+                        class="p-1.5 bg-cigno-blue text-white rounded-lg hover:opacity-90 transition-opacity"
+                        title="Salva"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2.5"
+                                d="M5 13l4 4L19 7"
+                            ></path>
+                        </svg>
+                    </button>
+                    <button
+                        id="cancel-nickname-btn"
+                        class="p-1.5 bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
+                        title="Annulla"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <p
+                    id="user-email"
+                    class="text-slate-500 dark:text-slate-400 text-xs mt-1"
+                >
+                    ...
+                </p>
+
+                <div class="flex flex-wrap gap-2 mt-4 justify-center items-center">
+                    <button
+                        id="retake-quiz-badge"
+                        class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-cigno-blue/10 text-cigno-blue hover:bg-cigno-blue/20 transition-all cursor-pointer flex items-center gap-1.5"
+                        title="Clicca per rifare lo smistamento"
+                    >
+                        <span id="badge-house">Nessuna Casata</span>
+                        <svg
+                            class="w-3.5 h-3.5 opacity-70"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                            ></path>
+                        </svg>
+                    </button>
+                    <span
+                        id="badge-clan"
+                        class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-400"
+                    >
+                        Nessun Clan
+                    </span>
+                </div>
+            </div>
+
+            <!-- Pulsante Logout Compatto -->
+            <div class="flex justify-center pt-2">
+                <button
+                    id="logout-btn"
+                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-red-500 dark:text-red-400 bg-red-500/10 hover:bg-red-500/20 transition-all"
+                >
+                    <svg
+                        class="w-3.5 h-3.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                        ></path>
+                    </svg>
+                    Esci (Logout)
+                </button>
+            </div>
+
+            <div
+                id="profile-message"
+                class="mt-4 text-center text-xs font-medium"
+            ></div>
         </div>
-
-        <!-- Nickname: Nome visualizzato con matita -->
-        <div id="nickname-display-container" class="flex items-center justify-center gap-2 mb-1">
-          <h1 id="user-display-name" class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Caricamento...</h1>
-          <button id="edit-nickname-btn" class="p-1.5 rounded-lg text-slate-400 hover:text-cigno-blue hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Modifica nickname">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-          </button>
-        </div>
-
-        <!-- Input che rimpiazza direttamente il nome durante la modifica -->
-        <div id="nickname-edit-container" class="hidden items-center justify-center gap-2 mb-1">
-          <input type="text" id="nickname-input" placeholder="Nickname..." class="text-xl font-bold text-center text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 border-2 border-cigno-blue rounded-xl px-3 py-1 focus:outline-none max-w-[220px]" />
-          <button id="save-nickname-btn" class="p-1.5 bg-cigno-blue text-white rounded-lg hover:opacity-90 transition-opacity" title="Salva">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-          </button>
-          <button id="cancel-nickname-btn" class="p-1.5 bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors" title="Annulla">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-          </button>
-        </div>
-
-        <p id="user-email" class="text-slate-500 dark:text-slate-400 text-xs mt-1">...</p>
-
-        <div class="flex flex-wrap gap-2 mt-4 justify-center">
-          <span id="badge-house" class="px-3 py-1 rounded-full text-xs font-semibold bg-cigno-blue/10 text-cigno-blue">Nessuna Casata</span>
-          <span id="badge-clan" class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-400">Nessun Clan</span>
-        </div>
-      </div>
-
-      <!-- Pulsante Logout Compatto -->
-      <div class="flex justify-center pt-2">
-        <button id="logout-btn" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-red-500 dark:text-red-400 bg-red-500/10 hover:bg-red-500/20 transition-all">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-          Esci (Logout)
-        </button>
-      </div>
-
-      <div id="profile-message" class="mt-4 text-center text-xs font-medium"></div>
     </div>
-  </div>
 
-  <script>
-    import { supabase } from '../lib/supabase';
+    <script>
+        import { supabase } from "../lib/supabase";
 
-    const displayName = document.getElementById('user-display-name');
-    const displayEmail = document.getElementById('user-email');
-    const nicknameDisplayContainer = document.getElementById('nickname-display-container');
-    const editNicknameBtn = document.getElementById('edit-nickname-btn');
-    const nicknameEditContainer = document.getElementById('nickname-edit-container');
-    const nicknameInput = document.getElementById('nickname-input') as HTMLInputElement;
-    const saveNicknameBtn = document.getElementById('save-nickname-btn');
-    const cancelNicknameBtn = document.getElementById('cancel-nickname-btn');
-    const avatarWrapper = document.getElementById('avatar-wrapper');
-    const avatarFileInput = document.getElementById('avatar-file-input') as HTMLInputElement;
-    const avatarInitial = document.getElementById('avatar-initial');
-    const avatarImg = document.getElementById('avatar-img') as HTMLImageElement;
-    const logoutBtn = document.getElementById('logout-btn');
-    const msg = document.getElementById('profile-message');
-    const badgeHouse = document.getElementById('badge-house');
-    const badgeClan = document.getElementById('badge-clan');
+        const displayName = document.getElementById("user-display-name");
+        const displayEmail = document.getElementById("user-email");
+        const nicknameDisplayContainer = document.getElementById(
+            "nickname-display-container",
+        );
+        const editNicknameBtn = document.getElementById("edit-nickname-btn");
+        const nicknameEditContainer = document.getElementById(
+            "nickname-edit-container",
+        );
+        const nicknameInput = document.getElementById(
+            "nickname-input",
+        ) as HTMLInputElement;
+        const saveNicknameBtn = document.getElementById("save-nickname-btn");
+        const cancelNicknameBtn = document.getElementById(
+            "cancel-nickname-btn",
+        );
+        const avatarWrapper = document.getElementById("avatar-wrapper");
+        const avatarFileInput = document.getElementById(
+            "avatar-file-input",
+        ) as HTMLInputElement;
+        const avatarInitial = document.getElementById("avatar-initial");
+        const avatarImg = document.getElementById(
+            "avatar-img",
+        ) as HTMLImageElement;
+        const logoutBtn = document.getElementById("logout-btn");
+        const msg = document.getElementById("profile-message");
+        const badgeHouse = document.getElementById("badge-house");
+        const retakeQuizBadge = document.getElementById("retake-quiz-badge");
+        const badgeClan = document.getElementById("badge-clan");
 
-    let currentUser: any = null;
+        let currentUser: any = null;
 
-    async function loadUser() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        window.location.href = '/accedi';
-        return;
-      }
-      currentUser = session.user;
-      const email = currentUser.email;
-      displayEmail.textContent = email;
+        async function loadUser() {
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = "/accedi";
+                return;
+            }
+            currentUser = session.user;
+            const email = currentUser.email;
+            displayEmail.textContent = email;
 
-      const googleAvatar = currentUser.user_metadata?.avatar_url || '';
-      const savedNick = localStorage.getItem('cigno_username') || currentUser.user_metadata?.full_name || email.split('@')[0];
-      const savedAvatar = localStorage.getItem('cigno_avatar') || googleAvatar;
-      const savedHouse = localStorage.getItem('cigno_house');
-      const savedClan = localStorage.getItem('cigno_clan');
+            const googleAvatar = currentUser.user_metadata?.avatar_url || "";
+            const savedNick =
+                localStorage.getItem("cigno_username") ||
+                currentUser.user_metadata?.full_name ||
+                email.split("@")[0];
+            const savedAvatar =
+                localStorage.getItem("cigno_avatar") || googleAvatar;
+            const savedHouse = localStorage.getItem("cigno_house");
+            const savedClan = localStorage.getItem("cigno_clan");
 
-      nicknameInput.value = savedNick;
-      displayName.textContent = savedNick;
+            nicknameInput.value = savedNick;
+            displayName.textContent = savedNick;
 
-      if (savedAvatar) {
-        setAvatar(savedAvatar);
-      } else {
-        setAvatar('', savedNick);
-      }
+            if (savedAvatar) {
+                setAvatar(savedAvatar);
+            } else {
+                setAvatar("", savedNick);
+            }
 
-      if (savedHouse) badgeHouse.textContent = `Casata: ${savedHouse}`;
-      if (savedClan) badgeClan.textContent = `Clan: ${savedClan}`;
-    }
+            if (savedHouse) {
+                badgeHouse.textContent = `Casata: ${savedHouse}`;
+            } else {
+                badgeHouse.textContent = "Nessuna Casata (Fai il Test)";
+            }
+            if (savedClan) badgeClan.textContent = `Clan: ${savedClan}`;
 
-    function setAvatar(url: string, name = '') {
-      if (url) {
-        avatarImg.src = url;
-        avatarImg.classList.remove('hidden');
-        avatarInitial.classList.add('hidden');
-      } else {
-        avatarImg.classList.add('hidden');
-        avatarInitial.classList.remove('hidden');
-        avatarInitial.textContent = name ? name.charAt(0).toUpperCase() : '?';
-      }
-    }
+            retakeQuizBadge?.addEventListener("click", () => {
+                window.location.href = "/mondo#smistamento-section";
+            });
+        }
 
-    // Click avatar to trigger local file upload
-    avatarWrapper?.addEventListener('click', () => {
-      avatarFileInput?.click();
-    });
+        function setAvatar(url: string, name = "") {
+            if (url) {
+                avatarImg.src = url;
+                avatarImg.classList.remove("hidden");
+                avatarInitial.classList.add("hidden");
+            } else {
+                avatarImg.classList.add("hidden");
+                avatarInitial.classList.remove("hidden");
+                avatarInitial.textContent = name
+                    ? name.charAt(0).toUpperCase()
+                    : "?";
+            }
+        }
 
-    avatarFileInput?.addEventListener('change', (e: Event) => {
-      const target = e.target as HTMLInputElement;
-      if (target.files && target.files[0]) {
-        const file = target.files[0];
-        const reader = new FileReader();
-        reader.onload = (uploadEvent) => {
-          const result = uploadEvent.target?.result as string;
-          if (result) {
-            localStorage.setItem('cigno_avatar', result);
-            setAvatar(result);
-            showMsg('Immagine profilo aggiornata!');
-          }
-        };
-        reader.readAsDataURL(file);
-      }
-    });
+        // Click avatar to trigger local file upload
+        avatarWrapper?.addEventListener("click", () => {
+            avatarFileInput?.click();
+        });
 
-    // Inizia la modifica del nickname direttamente sul nome
-    function startEditNickname() {
-      nicknameInput.value = displayName?.textContent || '';
-      nicknameDisplayContainer?.classList.add('hidden');
-      nicknameDisplayContainer?.classList.remove('flex');
-      nicknameEditContainer?.classList.remove('hidden');
-      nicknameEditContainer?.classList.add('flex');
-      nicknameInput.focus();
-      nicknameInput.select();
-    }
+        avatarFileInput?.addEventListener("change", (e: Event) => {
+            const target = e.target as HTMLInputElement;
+            if (target.files && target.files[0]) {
+                const file = target.files[0];
+                const reader = new FileReader();
+                reader.onload = (uploadEvent) => {
+                    const result = uploadEvent.target?.result as string;
+                    if (result) {
+                        localStorage.setItem("cigno_avatar", result);
+                        setAvatar(result);
+                        showMsg("Immagine profilo aggiornata!");
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
-    function stopEditNickname() {
-      nicknameEditContainer?.classList.add('hidden');
-      nicknameEditContainer?.classList.remove('flex');
-      nicknameDisplayContainer?.classList.remove('hidden');
-      nicknameDisplayContainer?.classList.add('flex');
-    }
+        // Inizia la modifica del nickname direttamente sul nome
+        function startEditNickname() {
+            nicknameInput.value = displayName?.textContent || "";
+            nicknameDisplayContainer?.classList.add("hidden");
+            nicknameDisplayContainer?.classList.remove("flex");
+            nicknameEditContainer?.classList.remove("hidden");
+            nicknameEditContainer?.classList.add("flex");
+            nicknameInput.focus();
+            nicknameInput.select();
+        }
 
-    function saveNickname() {
-      const nick = nicknameInput.value.trim();
-      if (nick) {
-        localStorage.setItem('cigno_username', nick);
-        if (displayName) displayName.textContent = nick;
-        setAvatar(localStorage.getItem('cigno_avatar') || '', nick);
-        stopEditNickname();
-        showMsg('Nickname aggiornato con successo!');
-      }
-    }
+        function stopEditNickname() {
+            nicknameEditContainer?.classList.add("hidden");
+            nicknameEditContainer?.classList.remove("flex");
+            nicknameDisplayContainer?.classList.remove("hidden");
+            nicknameDisplayContainer?.classList.add("flex");
+        }
 
-    editNicknameBtn?.addEventListener('click', startEditNickname);
-    saveNicknameBtn?.addEventListener('click', saveNickname);
-    cancelNicknameBtn?.addEventListener('click', stopEditNickname);
+        function saveNickname() {
+            const nick = nicknameInput.value.trim();
+            if (nick) {
+                localStorage.setItem("cigno_username", nick);
+                if (displayName) displayName.textContent = nick;
+                setAvatar(localStorage.getItem("cigno_avatar") || "", nick);
+                stopEditNickname();
+                showMsg("Nickname aggiornato con successo!");
+            }
+        }
 
-    nicknameInput?.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        saveNickname();
-      } else if (e.key === 'Escape') {
-        stopEditNickname();
-      }
-    });
+        editNicknameBtn?.addEventListener("click", startEditNickname);
+        saveNicknameBtn?.addEventListener("click", saveNickname);
+        cancelNicknameBtn?.addEventListener("click", stopEditNickname);
 
-    function showMsg(text: string) {
-      if (msg) {
-        msg.textContent = text;
-        msg.className = 'mt-4 text-center text-xs font-medium text-emerald-500';
-        setTimeout(() => { msg.textContent = ''; }, 3000);
-      }
-    }
+        nicknameInput?.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                saveNickname();
+            } else if (e.key === "Escape") {
+                stopEditNickname();
+            }
+        });
 
-    logoutBtn?.addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      window.location.href = '/';
-    });
+        function showMsg(text: string) {
+            if (msg) {
+                msg.textContent = text;
+                msg.className =
+                    "mt-4 text-center text-xs font-medium text-emerald-500";
+                setTimeout(() => {
+                    msg.textContent = "";
+                }, 3000);
+            }
+        }
 
-    loadUser();
-  </script>
+        logoutBtn?.addEventListener("click", async () => {
+            await supabase.auth.signOut();
+            window.location.href = "/";
+        });
+
+        loadUser();
+    </script>
 </Layout>
