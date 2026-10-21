@@ -27,31 +27,116 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
         </script>
     </head>
     <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cigno-blue selection:text-white transition-colors duration-300 min-h-full flex flex-col justify-between relative overflow-x-hidden">
-        <!-- Sfondo animato stellare -->
+        <!-- Sfondo animato complesso con Canvas e particelle/stelle + immagine -->
         <div class="fixed inset-0 -z-20 pointer-events-none overflow-hidden">
+            <!-- Immagine di sfondo con rotazione, deriva ed effetto parallasse avanzato -->
             <div
-                class="absolute inset-0 bg-cover bg-center animate-space-zoom opacity-40 dark:opacity-50"
+                id="space-bg-layer"
+                class="absolute inset-[-10%] bg-cover bg-center opacity-40 dark:opacity-60 transition-transform duration-75 ease-out"
                 style="background-image: url('/assets/space-bg.png');"
             ></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent"></div>
+            <!-- Canvas per particelle di luce, polvere stellare e nebulose animate -->
+            <canvas
+                id="space-canvas"
+                class="absolute inset-0 w-full h-full opacity-70"
+            ></canvas>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent"></div>
         </div>
 
-        <style>
-            @keyframes spaceZoom {
-                0% {
-                    transform: scale(1);
+        <script>
+            // Animazione complessa del background con parallasse del mouse ed effetto warp/onde galattiche
+            const bgLayer = document.getElementById("space-bg-layer");
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let currentX = 0;
+            let currentY = 0;
+            let angle = 0;
+
+            window.addEventListener("mousemove", (e) => {
+                mouseX = e.clientX - window.innerWidth / 2;
+                mouseY = e.clientY - window.innerHeight / 2;
+            });
+
+            function animateBackground() {
+                // Parallasse morbida basata sul movimento del mouse
+                currentX += (mouseX * 0.03 - currentX) * 0.05;
+                currentY += (mouseY * 0.03 - currentY) * 0.05;
+
+                // Ondulazione galattica lenta e continua
+                angle += 0.003;
+                const scale = 1.05 + Math.sin(angle) * 0.04;
+                const rotate = Math.cos(angle * 0.5) * 1.5;
+
+                if (bgLayer) {
+                    bgLayer.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale}) rotate(${rotate}deg)`;
                 }
-                50% {
-                    transform: scale(1.08);
-                }
-                100% {
-                    transform: scale(1);
-                }
+
+                requestAnimationFrame(animateBackground);
             }
-            .animate-space-zoom {
-                animation: spaceZoom 25s ease-in-out infinite;
+            animateBackground();
+
+            // Canvas particellare per polvere stellare attiva e flussi energetici Veyr
+            const canvas = document.getElementById(
+                "space-canvas",
+            ) as HTMLCanvasElement;
+            if (canvas) {
+                const ctx = canvas.getContext("2d");
+                let width = (canvas.width = window.innerWidth);
+                let height = (canvas.height = window.innerHeight);
+
+                window.addEventListener("resize", () => {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                });
+
+                const particles: any[] = [];
+                const numParticles = 60;
+
+                for (let i = 0; i < numParticles; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        radius: Math.random() * 2 + 0.5,
+                        color:
+                            Math.random() > 0.5
+                                ? "rgba(56, 189, 248, "
+                                : "rgba(251, 191, 36, ",
+                        alpha: Math.random() * 0.7 + 0.3,
+                        speedX: (Math.random() - 0.5) * 0.3,
+                        speedY: (Math.random() - 0.5) * 0.3,
+                        pulse: Math.random() * 0.02 + 0.005,
+                    });
+                }
+
+                function drawParticles() {
+                    ctx?.clearRect(0, 0, width, height);
+                    particles.forEach((p) => {
+                        p.x += p.speedX;
+                        p.y += p.speedY;
+                        p.alpha += Math.sin(Date.now() * p.pulse) * 0.01;
+
+                        if (p.x < 0) p.x = width;
+                        if (p.x > width) p.x = 0;
+                        if (p.y < 0) p.y = height;
+                        if (p.y > height) p.y = 0;
+
+                        if (ctx) {
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                            ctx.fillStyle =
+                                p.color +
+                                Math.max(0.1, Math.min(1, p.alpha)) +
+                                ")";
+                            ctx.shadowBlur = 10;
+                            ctx.shadowColor = p.color + "0.8)";
+                            ctx.fill();
+                        }
+                    });
+                    requestAnimationFrame(drawParticles);
+                }
+                drawParticles();
             }
-        </style>
+        </script>
         <!-- Skip link per l'accessibilità -->
         <a
             href="#main-content"
@@ -62,13 +147,13 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
 
         <div>
             <!-- Header / Navbar -->
-            <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 transition-colors">
+            <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-950/70 border-b border-slate-800 transition-colors">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
                     <div class="flex items-center gap-3 sm:gap-5 lg:gap-6">
                         <button
                             id="mobile-menu-btn"
                             aria-label="Menu"
-                            class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white lg:hidden transition-all shrink-0"
+                            class="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white lg:hidden transition-all shrink-0"
                         >
                             <svg
                                 class="w-5 h-5"
@@ -93,11 +178,11 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                                 alt="Logo Cignoverse"
                                 class="w-9 h-9 transition-transform group-hover:scale-110 duration-300"
                             />
-                            <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                            <span class="text-xl font-extrabold tracking-tight text-white">
                                 Cignoverse
                             </span>
                         </a>
-                        <nav class="hidden lg:flex items-center gap-4 lg:gap-5 text-sm font-medium text-slate-600 dark:text-slate-300 shrink-0">
+                        <nav class="hidden lg:flex items-center gap-4 lg:gap-5 text-sm font-medium text-slate-300 shrink-0">
                             <a
                                 href="/"
                                 class="hover:text-cigno-blue transition-colors"
@@ -134,35 +219,8 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                         <button
                             id="theme-toggle"
                             aria-label="Cambia tema"
-                            class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
-                        >
-                            <svg
-                                class="w-5 h-5 hidden dark:block"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                                ></path>
-                            </svg>
-                            <svg
-                                class="w-5 h-5 block dark:hidden"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                                ></path>
-                            </svg>
-                        </button>
+                            class="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition-all hidden"
+                        ></button>
                         <div id="user-menu-container" class="relative hidden">
                             <button
                                 id="user-menu-btn"
@@ -183,24 +241,24 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                             </button>
                             <div
                                 id="user-dropdown"
-                                class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 hidden z-50"
+                                class="absolute right-0 mt-2 w-48 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl py-2 hidden z-50"
                             >
                                 <a
                                     href="/profilo"
-                                    class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                    class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors"
                                 >
                                     Il mio Profilo
                                 </a>
                                 <a
                                     href="/impostazioni"
-                                    class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                    class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors"
                                 >
                                     Impostazioni
                                 </a>
-                                <div class="border-t border-slate-100 dark:border-slate-800 my-1"></div>
+                                <div class="border-t border-slate-800 my-1"></div>
                                 <button
                                     id="nav-logout-btn"
-                                    class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-500/10 transition-colors"
+                                    class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
                                 >
                                     Esci (Logout)
                                 </button>
@@ -209,7 +267,7 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                         <a
                             href="/accedi"
                             id="auth-login-btn"
-                            class="inline-block bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-4 py-2 rounded-lg font-medium text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                            class="inline-block bg-slate-800 text-slate-200 px-4 py-2 rounded-lg font-medium text-sm hover:bg-slate-700 transition-all"
                         >
                             Accedi
                         </a>
@@ -225,35 +283,35 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
             <!-- Mobile Menu Dropdown -->
             <div
                 id="mobile-menu"
-                class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 py-4 space-y-2 shadow-lg transition-all"
+                class="hidden lg:hidden border-b border-slate-800 bg-slate-950/95 backdrop-blur-md px-4 py-4 space-y-2 shadow-lg transition-all"
             >
                 <a
                     href="/"
-                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"
                 >
                     Home
                 </a>
                 <a
                     href="/progetti"
-                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"
                 >
                     Progetti
                 </a>
                 <a
                     href="/wiki"
-                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"
                 >
                     Wiki
                 </a>
                 <a
                     href="/mondo"
-                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"
                 >
                     Mondo
                 </a>
                 <a
                     href="/community"
-                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    class="block px-3 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"
                 >
                     Community
                 </a>
@@ -265,7 +323,7 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
         </div>
 
         <!-- Footer -->
-        <footer class="bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-400 py-12 border-t border-slate-200 dark:border-slate-800/80 mt-auto">
+        <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800/80 mt-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
                     <img
@@ -273,7 +331,7 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                         alt="Logo Cignoverse"
                         class="w-7 h-7"
                     />
-                    <span class="text-slate-900 dark:text-white font-bold tracking-tight">
+                    <span class="text-white font-bold tracking-tight">
                         Cignoverse Hub
                     </span>
                 </div>
@@ -305,17 +363,6 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
             const mobileMenu = document.getElementById("mobile-menu");
             mobileMenuBtn?.addEventListener("click", () => {
                 mobileMenu?.classList.toggle("hidden");
-            });
-
-            const btn = document.getElementById("theme-toggle");
-            btn?.addEventListener("click", () => {
-                if (document.documentElement.classList.contains("dark")) {
-                    document.documentElement.classList.remove("dark");
-                    localStorage.setItem("theme", "light");
-                } else {
-                    document.documentElement.classList.add("dark");
-                    localStorage.setItem("theme", "dark");
-                }
             });
 
             async function checkAuth() {
@@ -351,9 +398,11 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                         navAvatarImg.classList.remove("hidden");
                         navAvatarInitial?.classList.add("hidden");
                     } else {
-                        navAvatarInitial.textContent = savedNick
-                            .charAt(0)
-                            .toUpperCase();
+                        if (navAvatarInitial) {
+                            navAvatarInitial.textContent = savedNick
+                                .charAt(0)
+                                .toUpperCase();
+                        }
                     }
                 } else {
                     authLoginBtn?.classList.remove("hidden");
@@ -373,8 +422,9 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                 userDropdown?.classList.add("hidden");
             });
 
-            const navLogoutBtn = document.getElementById("nav-logout-btn");
-            navLogoutBtn?.addEventListener("click", async () => {
+            const navNavbarLogoutBtn =
+                document.getElementById("nav-logout-btn");
+            navNavbarLogoutBtn?.addEventListener("click", async () => {
                 await supabase.auth.signOut();
                 window.location.href = "/";
             });
