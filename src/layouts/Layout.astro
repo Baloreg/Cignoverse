@@ -27,55 +27,42 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
         </script>
     </head>
     <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cigno-blue selection:text-white transition-colors duration-300 min-h-full flex flex-col justify-between relative overflow-x-hidden">
-        <!-- Sfondo animato complesso con Canvas e particelle/stelle + immagine -->
+        <!-- Sfondo fisso elegante con immagine e particelle leggere non-interferenti -->
         <div class="fixed inset-0 -z-20 pointer-events-none overflow-hidden">
-            <!-- Immagine di sfondo con rotazione, deriva ed effetto parallasse avanzato -->
             <div
-                id="space-bg-layer"
-                class="absolute inset-[-10%] bg-cover bg-center opacity-40 dark:opacity-60 transition-transform duration-75 ease-out"
+                class="absolute inset-[-5%] bg-cover bg-center opacity-40 dark:opacity-50 animate-space-pulse"
                 style="background-image: url('/assets/space-bg.png');"
             ></div>
-            <!-- Canvas per particelle di luce, polvere stellare e nebulose animate -->
             <canvas
                 id="space-canvas"
-                class="absolute inset-0 w-full h-full opacity-70"
+                class="absolute inset-0 w-full h-full opacity-60"
             ></canvas>
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/40"></div>
         </div>
 
-        <script>
-            // Animazione complessa del background con parallasse del mouse ed effetto warp/onde galattiche
-            const bgLayer = document.getElementById("space-bg-layer");
-            let mouseX = window.innerWidth / 2;
-            let mouseY = window.innerHeight / 2;
-            let currentX = 0;
-            let currentY = 0;
-            let angle = 0;
-
-            window.addEventListener("mousemove", (e) => {
-                mouseX = e.clientX - window.innerWidth / 2;
-                mouseY = e.clientY - window.innerHeight / 2;
-            });
-
-            function animateBackground() {
-                // Parallasse morbida basata sul movimento del mouse
-                currentX += (mouseX * 0.03 - currentX) * 0.05;
-                currentY += (mouseY * 0.03 - currentY) * 0.05;
-
-                // Ondulazione galattica lenta e continua
-                angle += 0.003;
-                const scale = 1.05 + Math.sin(angle) * 0.04;
-                const rotate = Math.cos(angle * 0.5) * 1.5;
-
-                if (bgLayer) {
-                    bgLayer.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale}) rotate(${rotate}deg)`;
+        <style>
+            @keyframes spacePulse {
+                0% {
+                    transform: scale(1);
+                    filter: brightness(1);
                 }
-
-                requestAnimationFrame(animateBackground);
+                50% {
+                    transform: scale(1.03);
+                    filter: brightness(1.1);
+                }
+                100% {
+                    transform: scale(1);
+                    filter: brightness(1);
+                }
             }
-            animateBackground();
+            .animate-space-pulse {
+                animation: spacePulse 20s ease-in-out infinite;
+                will-change: transform, filter;
+            }
+        </style>
 
-            // Canvas particellare per polvere stellare attiva e flussi energetici Veyr
+        <script>
+            // Canvas particellare pulito e ottimizzato senza interferire con il DOM
             const canvas = document.getElementById(
                 "space-canvas",
             ) as HTMLCanvasElement;
@@ -90,35 +77,33 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                 });
 
                 const particles: any[] = [];
-                const numParticles = 60;
+                const numParticles = 40;
 
                 for (let i = 0; i < numParticles; i++) {
                     particles.push({
                         x: Math.random() * width,
                         y: Math.random() * height,
-                        radius: Math.random() * 2 + 0.5,
+                        radius: Math.random() * 1.5 + 0.5,
                         color:
                             Math.random() > 0.5
                                 ? "rgba(56, 189, 248, "
                                 : "rgba(251, 191, 36, ",
-                        alpha: Math.random() * 0.7 + 0.3,
-                        speedX: (Math.random() - 0.5) * 0.3,
-                        speedY: (Math.random() - 0.5) * 0.3,
-                        pulse: Math.random() * 0.02 + 0.005,
+                        alpha: Math.random() * 0.5 + 0.2,
+                        speedY: -Math.random() * 0.2 - 0.05,
+                        pulse: Math.random() * 0.01 + 0.002,
                     });
                 }
 
                 function drawParticles() {
                     ctx?.clearRect(0, 0, width, height);
                     particles.forEach((p) => {
-                        p.x += p.speedX;
                         p.y += p.speedY;
-                        p.alpha += Math.sin(Date.now() * p.pulse) * 0.01;
+                        p.alpha += Math.sin(Date.now() * p.pulse) * 0.005;
 
-                        if (p.x < 0) p.x = width;
-                        if (p.x > width) p.x = 0;
-                        if (p.y < 0) p.y = height;
-                        if (p.y > height) p.y = 0;
+                        if (p.y < 0) {
+                            p.y = height;
+                            p.x = Math.random() * width;
+                        }
 
                         if (ctx) {
                             ctx.beginPath();
@@ -127,8 +112,6 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                                 p.color +
                                 Math.max(0.1, Math.min(1, p.alpha)) +
                                 ")";
-                            ctx.shadowBlur = 10;
-                            ctx.shadowColor = p.color + "0.8)";
                             ctx.fill();
                         }
                     });
@@ -147,7 +130,7 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
 
         <div>
             <!-- Header / Navbar -->
-            <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-950/70 border-b border-slate-800 transition-colors">
+            <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-950/80 border-b border-slate-800/80 transition-colors">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
                     <div class="flex items-center gap-3 sm:gap-5 lg:gap-6">
                         <button
@@ -396,7 +379,7 @@ const { title = "Cignoverse — Hub del Club del Cigno" } = Astro.props;
                     if (savedAvatar) {
                         navAvatarImg.src = savedAvatar;
                         navAvatarImg.classList.remove("hidden");
-                        navAvatarInitial?.classList.add("hidden");
+                        navavatarInitial?.classList.add("hidden");
                     } else {
                         if (navAvatarInitial) {
                             navAvatarInitial.textContent = savedNick
